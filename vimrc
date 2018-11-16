@@ -33,7 +33,7 @@ highlight SignatureMarkText ctermbg=none guibg=none
 set ignorecase
 set smartcase
 
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'jalvesaq/Nvim-R'
 Plug 'kshenoy/vim-signature'
