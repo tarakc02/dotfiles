@@ -13,8 +13,7 @@ alias ll="ls -al"
 alias less="less -R"
 alias tree="tree -C"
 
-PATH=~/bin:$PATH
-PATH=$PATH:$HRDAG_GIT_HOME/snap/bin
+PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
 # added by Anaconda3 5.3.0 installer
 # >>> conda init >>>
