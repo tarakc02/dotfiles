@@ -25,9 +25,12 @@ let &t_EI.="\e[1 q"
 "color
 highlight Pmenu ctermbg=gray gui=bold
 highlight PmenuSel ctermbg=lightcyan gui=bold
-highlight ColorColumn ctermbg=0 guibg=#2c2d27
+highlight ColorColumn ctermbg=232 guibg=#2c2d27
 highlight SignColumn ctermbg=none guibg=none
 highlight SignatureMarkText ctermbg=none guibg=none
+highlight LineNr ctermfg=grey
+highlight LineNr cterm=italic
+highlight Comment cterm=italic 
 
 "search/replace
 set ignorecase
