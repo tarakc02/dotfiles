@@ -42,6 +42,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'jalvesaq/Nvim-R'
 Plug 'kshenoy/vim-signature'
 Plug 'vim-airline/vim-airline'
+Plug 'Yavor-Ivanov/airline-monokai-subtle.vim'
 
 "Options related to Nvim-R
 vmap <Space> <Plug>RDSendSelection
@@ -55,6 +56,7 @@ let R_nvim_wd = 1
 "show buffers, navigate with Tab/Shift+Tab
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'default'
+let g:airline_theme = 'monokai_subtle'
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
