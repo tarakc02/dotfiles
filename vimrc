@@ -1,11 +1,12 @@
 set nocompatible
 set hidden
+set termguicolors
+syntax enable
 let maplocalleader = ','
 
 "layout
 set relativenumber number
 set colorcolumn=80
-syntax enable
 
 " tabs
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
@@ -63,6 +64,9 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
+colorscheme monokai
+let g:monokai_term_italic = 1
+let g:monokai_gui_italic = 1
 set completeopt=noinsert,menuone,noselect
 
 call plug#end()
