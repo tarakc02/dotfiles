@@ -1,8 +1,10 @@
+#!/bin/bash
+
 export EDITOR="nvim"
 export VISUAL="nvim"
 export HRDAG_GIT_HOME=~/git
 
-PS1="\n\[\e[3m\]\u\] @ \[\e[36m\]\h\[\e[0;3m\] (\j)\n\[\e[0;3m\]\[\e[0;33m\]\w: \[\e[0;00m\]"
+PS1="\n\[\e[32m\]\w\n@ \h (\j): \[\e[0;00m\]"
 
 if [[ -a $(which nvim) ]]
 then
