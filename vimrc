@@ -4,6 +4,7 @@ set termguicolors
 syntax enable
 let maplocalleader = ','
 
+nnoremap <LocalLeader><LocalLeader> ,
 "layout
 set relativenumber number
 set colorcolumn=80
