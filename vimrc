@@ -8,6 +8,21 @@ let maplocalleader = ','
 set relativenumber number
 set colorcolumn=80
 
+"focus
+function! s:DimInactiveWindow()
+    set norelativenumber number
+    let &l:colorcolumn='+' . join(range(0, 255), ',')
+endfunction
+
+function! s:UndimActiveWindow()
+    set colorcolumn=80
+    set relativenumber number
+endfunction
+
+autocmd WinEnter * call s:UndimActiveWindow()
+autocmd BufEnter * call s:UndimActiveWindow()
+autocmd WinLeave * call s:DimInactiveWindow()
+
 " tabs
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 set smartindent
@@ -49,6 +64,9 @@ Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-path'
 Plug 'jalvesaq/Nvim-R'
 Plug 'gaalcaras/ncm-R'
+Plug 'sirver/UltiSnips'
+Plug 'ncm2/ncm2-ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
 Plug 'Yavor-Ivanov/airline-monokai-subtle.vim'
 
@@ -57,9 +75,12 @@ vmap <Space> <Plug>RDSendSelection
 nmap <Space> <Plug>RDSendLine
 vmap <LocalLeader>c <Plug>RToggleComment
 nmap <LocalLeader>c <Plug>RToggleComment
-"inoremap <LocalLeader><LocalLeader> <C-x><C-o>
 let R_assign = 0
 let R_nvim_wd = 1
+
+"status line via airline
+let g:airline_section_b = '%-0.40{getcwd()}'
+let g:airline_section_c = "%f"
 
 "show buffers, navigate with Tab/Shift+Tab
 let g:airline#extensions#tabline#enabled = 1
@@ -80,6 +101,14 @@ let g:monokai_gui_italic = 1
 
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
+
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
+" c-j c-k for moving in snippet
+let g:UltiSnipsExpandTrigger	    = "<C-s>"
+let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+"let g:UltiSnipsRemoveSelectModeMappings = 0
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
