@@ -12,8 +12,10 @@ then
 fi
 
 alias ll="ls -alG"
-alias less="less -R"
-alias tree="tree -C"
+
+function trls() {
+    tree -C $* $1 | less -R
+}
 
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
 
