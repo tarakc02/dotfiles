@@ -1,4 +1,5 @@
 #!/bin/bash
+[ -r ~/.bashrc ] && . ~/.bashrc
 
 export EDITOR="nvim"
 export VISUAL="nvim"
@@ -14,7 +15,7 @@ fi
 alias ll="ls -alG"
 
 function trls() {
-    tree -C $* $1 | less -R
+    tree -C "$@" | less -R
 }
 
 PATH="$HOME/bin:$HOME/.local/bin:$PATH"
