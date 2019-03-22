@@ -1,0 +1,20 @@
+snippet hdr "file-header"
+#
+# Authors:     TS
+# Maintainers: TS
+# Copyright:   `date +"%Y"`, HRDAG, GPL v2 or later
+# =========================================
+# `!p
+import subprocess
+toplevel = subprocess.Popen(['git', 'rev-parse', '--show-toplevel'],
+stdout = subprocess.PIPE,
+stderr = subprocess.PIPE)
+
+toplevel = toplevel.communicate()[0].rstrip().decode('utf-8')
+projroot = os.path.basename(toplevel)
+
+fullpath = os.path.abspath(path)
+snip.rv = re.sub(toplevel, projroot, fullpath)
+`
+
+endsnippet

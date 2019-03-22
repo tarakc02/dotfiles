@@ -8,6 +8,8 @@ nnoremap <LocalLeader><LocalLeader> ,
 "layout
 set relativenumber number
 set colorcolumn=80
+set list
+set listchars=tab:▸\ ,eol:¬,nbsp:·,trail:·
 
 "focus
 function! s:DimInactiveWindow()
@@ -24,6 +26,8 @@ autocmd WinEnter * call s:UndimActiveWindow()
 autocmd BufEnter * call s:UndimActiveWindow()
 autocmd WinLeave * call s:DimInactiveWindow()
 
+autocmd TermOpen * set nobuflisted
+
 " tabs
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 set smartindent
@@ -32,6 +36,20 @@ set smartindent
 if &ft == 'make'
     setlocal noexpandtab
     setlocal tabstop=4
+endif
+
+if &ft == 'markdown'
+    set wrap linebreak nolist
+    vmap j gj
+    vmap k gk
+    vmap $ g$
+    vmap ^ g^
+    vmap 0 g0
+    nmap j gj
+    nmap k gk
+    nmap $ g$
+    nmap ^ g^
+    nmap 0 g0
 endif
 
 " cursor shape
@@ -54,6 +72,9 @@ inoremap <expr>} getline('.')[col('.')-1] == "}" ? "\<C-G>U<Right>" : "}"
 inoremap <expr>' strpart(getline('.'), col('.')-1, 1) == "\'" ? "\<Right>" : "\'\'\<Left>"
 inoremap <expr>" strpart(getline('.'), col('.')-1, 1) == "\"" ? "\<Right>" : "\"\"\<Left>"
 
+let known_pairs = { "{}": "", "[]": "", "()": "", "\"\"": "", "''": "" }
+inoremap <expr><BS> has_key(known_pairs, getline('.')[col('.')-2:col('.')-1]) ? "\<C-G>U<Right><BS><BS>" : "\<BS>"
+
 "search/replace
 set ignorecase
 set smartcase
@@ -70,6 +91,11 @@ Plug 'ncm2/ncm2-ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
 Plug 'Yavor-Ivanov/airline-monokai-subtle.vim'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'godlygeek/tabular'
+Plug 'junegunn/fzf', { 'dir': '~/git/fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 "Options related to Nvim-R
 vmap <Space> <Plug>RDSendSelection
@@ -86,6 +112,7 @@ let g:airline_section_c = "%f"
 "show buffers, navigate with Tab/Shift+Tab
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'default'
+let g:airline#extensions#tabline#buffer_nr_show=1
 let g:airline_theme = 'monokai_subtle'
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
@@ -109,6 +136,8 @@ inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
 let g:UltiSnipsExpandTrigger	    = "<C-s>"
 let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
 let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsSnippetDirectories   = ["UltiSnips", "my-snippets"]
+let g:UltiSnipsSnippetsDir           = $HOME . "/.config/nvim/my-snippets"
 "let g:UltiSnipsRemoveSelectModeMappings = 0
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"

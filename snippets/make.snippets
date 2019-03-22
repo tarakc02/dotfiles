@@ -1,0 +1,11 @@
+snippet maketask "basic makefile"
+.PHONY: all clean
+
+all: $1
+
+clean: 
+		-rm -r output/*
+
+$1:
+
+endsnippet
