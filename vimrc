@@ -1,3 +1,4 @@
+" a new comment
 set nocompatible
 set hidden
 set termguicolors
