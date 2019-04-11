@@ -33,24 +33,26 @@ set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 set smartindent
 
 " makefiles use tabs
-if &ft == 'make'
-    setlocal noexpandtab
-    setlocal tabstop=4
-endif
+augroup makefile_mappings
+    autocmd!
+    autocmd FileType make setlocal noexpandtab tabstop=4
+augroup END
 
-if &ft == 'markdown'
-    set wrap linebreak nolist
-    vmap j gj
-    vmap k gk
-    vmap $ g$
-    vmap ^ g^
-    vmap 0 g0
-    nmap j gj
-    nmap k gk
-    nmap $ g$
-    nmap ^ g^
-    nmap 0 g0
-endif
+" long lines in markdown
+augroup markdown_navigation
+    autocmd!
+    autocmd FileType markdown,rmd set wrap linebreak nolist
+    autocmd FileType markdown,rmd vmap j gj
+    autocmd FileType markdown,rmd vmap k gk
+    autocmd FileType markdown,rmd vmap $ g$
+    autocmd FileType markdown,rmd vmap ^ g^
+    autocmd FileType markdown,rmd vmap 0 g0
+    autocmd FileType markdown,rmd nmap j gj
+    autocmd FileType markdown,rmd nmap k gk
+    autocmd FileType markdown,rmd nmap $ g$
+    autocmd FileType markdown,rmd nmap ^ g^
+    autocmd FileType markdown,rmd nmap 0 g0
+augroup END
 
 " cursor shape
 let &t_SI.="\e[5 q"
