@@ -1,0 +1,135 @@
+#! /usr/bin/env bash
+
+# -----------------------------------------------------------------------------
+# setup library functions and PATH
+# -----------------------------------------------------------------------------
+
+# search for '####' in libsnap.sh to see coding-conventions and environment
+source libsnap.sh || exit 1
+# We use these constants from libsnap.sh (and change $our_name)
+readonly tmp_dir our_path true false is_darwin max_call_stack_args
+# We used these functions from libsnap.sh .
+readonly -f print-or-egrep-Usage-then-exit
+
+prepend-to-PATH-var PATH /usr/local/bin
+prepend-to-PATH-var PATH /usr/local/sbin
+
+# -----------------------------------------------------------------------------
+# define Usage, parse options
+# -----------------------------------------------------------------------------
+
+Usage="
+Usage: $our_name action [args]
+  Current actions are:
+      root: show project root if in git repository
+      grep: git grep in project files, use -- :/ to search from top level
+
+  NOTE: to see what an action would do, use -d option to simulate the action.
+  NOTE: this was copied from aer-tools, see it for more sample code
+
+  Common options:
+	-d: Debug shell script (don't run commands, just show them): simulation
+	-t: Trace shell script (show commands as they execute)
+	-T level: control whether Trace & TraceV functions run echoE & echoEV
+	-k keyword: show actions whose Usage message contains keyword
+"
+
+IfRun= Trace=    debug_opt= trace_opt=
+declare -i Trace_level=0		# default to none (probably)
+our_opts=
+while getopts "dtT: hk"  arg
+    do	our_opts+=" -$arg ${OPTARG-}"
+	case $arg in
+	   ( d ) IfRun="echo"	 debug_opt=-d ;; # put $IfRun b4 'active' cmds
+	   ( t ) Trace="set -x"  trace_opt=-t ;;
+	   ( T ) Trace_level=$OPTARG Trace_level_opt="-T $OPTARG" ;;
+
+	   (h|k) print-or-egrep-Usage-then-exit "$@" ;;
+	   ( * ) echo "$Usage" >&2; exit 1 ;;
+	esac
+done
+let OPTIND=$OPTIND-1
+shift $OPTIND
+unset arg
+
+[[ $Trace && $IfRun ]] && IfRun=:
+
+trap 'set +x; rm -f $tmp_1 $tmp_2 $tmp_3 $tmp_4 $tmp_5; trap EXIT' EXIT
+
+readonly tmp_1=$tmp_dir/$our_name-1-$$	; tmp=$tmp_1
+readonly tmp_2=$tmp_dir/$our_name-2-$$
+readonly tmp_3=$tmp_dir/$our_name-3-$$
+readonly tmp_4=$tmp_dir/$our_name-4-$$
+readonly tmp_5=$tmp_dir/$our_name-5-$$
+
+FUNCNEST=100				# abort on infinite recursion
+
+# $Trace
+
+# -----------------------------------------------------------------------------
+# functions
+# -----------------------------------------------------------------------------
+
+sum-args-prodedural() {
+
+	local -i arg sum=0    # -i means integer, so arithmetic is implied
+	for arg
+	    do	sum+=arg
+	done
+	echo "$FUNCNAME = $sum"
+}
+
+# ----
+
+sum-args-functional() {
+	local args=$*
+
+    TraceV 1 args    # only see this when using -T1
+    [[ $args =~ ^[0-9\ ]+$ ]] || abort "args must be integers"
+    [[ $args != *[!0-9\ ]* ]] || abort "args must be integers"
+	local -i sum=${args// /+}
+	echo "$FUNCNAME = $sum"
+}
+
+project-root() {
+    git rev-parse --show-toplevel || abort "only works within git repositories"
+}
+
+find-in-files() {
+    git grep --break -n -r --full-name "$@" \
+        || abort "use --no-index outside of git repos"
+}
+
+# ----------------------------------------------------------------------------
+# end of functions and global variables
+# ----------------------------------------------------------------------------
+
+#############################################################################
+# put actions after here
+#############################################################################
+
+[[ $# != 0 ]] || abort "specify an action to perform\n$Usage"
+
+set -u			    # abort if access unset (e.g. misspelled) variable
+
+action=$1; shift
+_our_name="$our_name"
+ our_name="$our_name $action"
+undo-action-abbrev() { readonly action=$1 our_name="$_our_name $1" _our_name; }
+
+#$Trace
+
+case $action in
+    # root: show project root if in git repository
+    ( root )
+        project-root
+        ;;
+    # grep: git grep in project files, use `-- :/` to search from top level
+    ( grep )
+        find-in-files "$@"
+        ;;
+    ( * )
+        abort "'$action' is not a recognized action, run: $_our_name -h"
+        ;;
+
+esac
