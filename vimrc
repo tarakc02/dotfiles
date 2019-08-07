@@ -39,20 +39,20 @@ augroup makefile_mappings
     autocmd FileType make setlocal noexpandtab tabstop=4
 augroup END
 
-" long lines in markdown
+" long lines in markdown/tex
 augroup markdown_navigation
     autocmd!
-    autocmd FileType markdown,rmd set wrap linebreak nolist
-    autocmd FileType markdown,rmd vmap j gj
-    autocmd FileType markdown,rmd vmap k gk
-    autocmd FileType markdown,rmd vmap $ g$
-    autocmd FileType markdown,rmd vmap ^ g^
-    autocmd FileType markdown,rmd vmap 0 g0
-    autocmd FileType markdown,rmd nmap j gj
-    autocmd FileType markdown,rmd nmap k gk
-    autocmd FileType markdown,rmd nmap $ g$
-    autocmd FileType markdown,rmd nmap ^ g^
-    autocmd FileType markdown,rmd nmap 0 g0
+    autocmd FileType markdown,rmd,tex set wrap linebreak nolist
+    autocmd FileType markdown,rmd,tex vmap j gj
+    autocmd FileType markdown,rmd,tex vmap k gk
+    autocmd FileType markdown,rmd,tex vmap $ g$
+    autocmd FileType markdown,rmd,tex vmap ^ g^
+    autocmd FileType markdown,rmd,tex vmap 0 g0
+    autocmd FileType markdown,rmd,tex nmap j gj
+    autocmd FileType markdown,rmd,tex nmap k gk
+    autocmd FileType markdown,rmd,tex nmap $ g$
+    autocmd FileType markdown,rmd,tex nmap ^ g^
+    autocmd FileType markdown,rmd,tex nmap 0 g0
 augroup END
 
 " cursor shape
@@ -81,6 +81,9 @@ inoremap <expr><BS> has_key(known_pairs, getline('.')[col('.')-2:col('.')-1]) ? 
 "search/replace
 set ignorecase
 set smartcase
+
+"use git grep
+set grepprg=git\ grep\ --break\ -n\ -r\ $*\ --\ :/
 
 call plug#begin('~/.local/share/nvim/plugged')
 
