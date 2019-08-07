@@ -9,3 +9,7 @@ clean:
 $1:
 
 endsnippet
+
+snippet here "here() for consistent project context"
+HERE := $(shell Rscript --vanilla -e 'write(here::here(), stdout())')
+endsnippet
