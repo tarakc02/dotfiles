@@ -13,6 +13,7 @@ then
 fi
 
 alias ll="ls -alG"
+alias disks="df -x squashfs -x tmpfs --block-size=M"
 
 function trls() {
     tree -C "$@" | less -R
