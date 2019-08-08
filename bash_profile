@@ -5,6 +5,9 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 export HRDAG_GIT_HOME=~/git
 
+export NVIM_TUI_ENABLE_TRUE_COLOR=1
+export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
 PS1="\n\[\e[32m\]\w\n@ \h (\j): \[\e[0;00m\]"
 
 if [[ -a $(which nvim) ]]

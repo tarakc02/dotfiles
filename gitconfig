@@ -10,6 +10,7 @@
 	required = true
 [color "grep"]
     context = dim white
+    function = dim white
     filename = dim white
     linenumber = dim yellow
     match = red
