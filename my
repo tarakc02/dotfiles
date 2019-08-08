@@ -96,7 +96,7 @@ project-root() {
 }
 
 find-in-files() {
-    git grep --break -n -r -p -C2 --full-name "$@" \
+    git grep --break -n -p -C2 --full-name "$@" \
         || abort "use --no-index outside of git repos"
 }
 
