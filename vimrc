@@ -63,6 +63,39 @@ let &t_EI.="\e[1 q"
 " terminal mode
 tnoremap <Esc> <C-\><C-n>
 
+" colors
+" dark0 + gray
+let g:terminal_color_0 = "#272822"
+let g:terminal_color_8 = "#8F908A"
+
+" neurtral_red + bright_red
+let g:terminal_color_1 = "#e73c50"
+let g:terminal_color_9 = "#5f0000"
+
+" neutral_green + bright_green
+let g:terminal_color_2 = "#b8bb26"
+let g:terminal_color_10 = "#98971a"
+
+" neutral_yellow + bright_yellow
+let g:terminal_color_3 = "#E6DB74"
+let g:terminal_color_11 = "#FD9720"
+
+" neutral_blue + bright_blue
+let g:terminal_color_4 = "#66d9ef"
+let g:terminal_color_12 = "#83a598"
+
+" neutral_purple + bright_purple
+let g:terminal_color_5 = "#b16286"
+let g:terminal_color_13 = "#d3869b"
+
+" neutral_aqua + faded_aqua
+let g:terminal_color_6 = "#689d6a"
+let g:terminal_color_14 = "#8ec07c"
+
+" light4 + light1
+let g:terminal_color_7 = "#E8E8E3"
+let g:terminal_color_15 = "#575b61"
+
 " close brackets/parens/quotes
 inoremap ( ()<C-G>U<Left>
 inoremap [ []<C-G>U<Left>
