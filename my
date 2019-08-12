@@ -100,6 +100,9 @@ find-in-files() {
         || abort "use --no-index outside of git repos"
 }
 
+# I used this to find every time I used `pdf_text`
+#find . -type f -iname "*.R" -exec grep -r -n -H -C2 --color=always "pdf_text" {} +;
+
 # ----------------------------------------------------------------------------
 # end of functions and global variables
 # ----------------------------------------------------------------------------

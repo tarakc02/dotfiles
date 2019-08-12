@@ -1,5 +1,6 @@
 " a new comment
 set nocompatible
+set cursorline
 set hidden
 set termguicolors
 syntax enable
@@ -28,6 +29,9 @@ autocmd BufEnter * call s:UndimActiveWindow()
 autocmd WinLeave * call s:DimInactiveWindow()
 
 autocmd TermOpen * set nobuflisted
+
+" edited this out b/c it makes it slow to open nvim
+"set shell=bash\ -l
 
 " tabs
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
