@@ -23,6 +23,7 @@ Usage: $our_name action [args]
   Current actions are:
       root: show project root if in git repository
       grep: git grep in project files, use -- :/ to search from top level
+      task: create new task with src, input, output dirs
 
   NOTE: to see what an action would do, use -d option to simulate the action.
   NOTE: this was copied from aer-tools, see it for more sample code
@@ -100,6 +101,12 @@ find-in-files() {
         || abort "use --no-index outside of git repos"
 }
 
+new-task() {
+    local args=$*
+    [[ ! -d $1 ]] || abort "directory $1 already exists"
+    mkdir -p $1/input $1/src $1/output
+}
+
 # I used this to find every time I used `pdf_text`
 #find . -type f -iname "*.R" -exec grep -r -n -H -C2 --color=always "pdf_text" {} +;
 
@@ -130,6 +137,10 @@ case $action in
     # grep: git grep in project files, use `-- :/` to search from top level
     ( grep )
         find-in-files "$@"
+        ;;
+    # task: create new task with src, input, output dirs
+    ( task )
+        new-task "$@"
         ;;
     ( * )
         abort "'$action' is not a recognized action, run: $_our_name -h"
