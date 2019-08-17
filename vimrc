@@ -129,6 +129,7 @@ Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-path'
 Plug 'jalvesaq/Nvim-R'
 Plug 'gaalcaras/ncm-R'
+Plug 'ncm2/ncm2-jedi'
 Plug 'sirver/UltiSnips'
 Plug 'ncm2/ncm2-ultisnips'
 Plug 'honza/vim-snippets'
@@ -139,6 +140,7 @@ Plug 'tpope/vim-repeat'
 Plug 'godlygeek/tabular'
 Plug 'junegunn/fzf', { 'dir': '~/git/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
+Plug 'JuliaEditorSupport/julia-vim'
 
 "Options related to Nvim-R
 vmap <Space> <Plug>RDSendSelection
