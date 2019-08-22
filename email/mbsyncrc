@@ -1,0 +1,54 @@
+# based on https://webgefrickel.de/blog/a-modern-mutt-setup
+
+#################################
+######## Account hrdag ########
+#################################
+
+IMAPAccount hrdag
+Host imap.fastmail.com
+User tarak_hrvd_org@fastmail.fm
+PassCmd "gpg --quiet --for-your-eyes-only --no-tty -d ~/.mutt/passwords/fastmail.gpg"
+SSLType IMAPS
+
+# Remote storage
+IMAPStore hrdag-remote
+Account hrdag
+
+# Local storage
+MaildirStore hrdag-local
+Path ~/Mail/hrdag/
+Inbox ~/Mail/hrdag/inbox
+
+Create Slave
+Channel hrdag-inbox
+Master :hrdag-remote:"Inbox"
+Slave :hrdag-local:inbox
+
+Channel hrdag-archive
+Master :hrdag-remote:"Archive"
+Slave :hrdag-local:archive
+
+Channel hrdag-drafts
+Master :hrdag-remote:"Drafts"
+Slave :hrdag-local:drafts
+
+Channel hrdag-sent
+Master :hrdag-remote:"Sent"
+Slave :hrdag-local:sent
+
+Channel hrdag-trash
+Master :hrdag-remote:"Trash"
+Slave :hrdag-local:trash
+
+Channel hrdag-junk
+Master :hrdag-remote:"Spam"
+Slave :hrdag-local:junk
+
+Group hrdag
+Channel hrdag-inbox
+Channel hrdag-archive
+Channel hrdag-drafts
+Channel hrdag-sent
+Channel hrdag-trash
+Channel hrdag-junk
+
