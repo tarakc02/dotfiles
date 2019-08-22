@@ -11,6 +11,8 @@ export FZF_COMPLETION_TRIGGER='?'
 export NVIM_TUI_ENABLE_TRUE_COLOR=1
 export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
+eval "$(fasd --init auto)"
+
 if [[ -a $(which nvim) ]]
 then
     alias vim="nvim"

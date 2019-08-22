@@ -1,6 +1,8 @@
 #!/bin/bash
 [ -r ~/.bashrc ] && . ~/.bashrc
 
+eval "$(fasd --init auto)"
+
 export EDITOR="nvim"
 export VISUAL="nvim"
 export HRDAG_GIT_HOME=~/git
