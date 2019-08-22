@@ -1,6 +1,7 @@
 " a new comment
 set nocompatible
 set cursorline
+nnoremap <LocalLeader>v :set cursorline!<CR>
 set hidden
 set termguicolors
 syntax enable
@@ -42,6 +43,17 @@ augroup makefile_mappings
     autocmd!
     autocmd FileType make setlocal noexpandtab tabstop=4
 augroup END
+
+augroup mail_settings
+    autocmd!
+    autocmd FileType mail setlocal noexpandtab tabstop=4
+    autocmd FileType mail inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
+    \ 'prefix': '^From:(.*)$',
+    \ 'source': 'notmuch address "*"',
+    \ 'options': '--multi --reverse --margin 15%,0',
+    \ 'reducer': { lines -> join(lines, ',')} }))
+augroup END
+
 
 " long lines in markdown/tex
 augroup markdown_navigation
@@ -105,11 +117,11 @@ inoremap ( ()<C-G>U<Left>
 inoremap [ []<C-G>U<Left>
 inoremap { {}<C-G>U<Left>
 inoremap " ""<C-G>U<Left>
-inoremap ' ''<C-G>U<Left>
+"inoremap ' ''<C-G>U<Left>
 inoremap <expr>) getline('.')[col('.')-1] == ")" ? "\<C-G>U<Right>" : ")"
 inoremap <expr>] getline('.')[col('.')-1] == "]" ? "\<C-G>U<Right>" : "]"
 inoremap <expr>} getline('.')[col('.')-1] == "}" ? "\<C-G>U<Right>" : "}"
-inoremap <expr>' strpart(getline('.'), col('.')-1, 1) == "\'" ? "\<Right>" : "\'\'\<Left>"
+"inoremap <expr>' strpart(getline('.'), col('.')-1, 1) == "\'" ? "\<Right>" : "\'\'\<Left>"
 inoremap <expr>" strpart(getline('.'), col('.')-1, 1) == "\"" ? "\<Right>" : "\"\"\<Left>"
 
 let known_pairs = { "{}": "", "[]": "", "()": "", "\"\"": "", "''": "" }
@@ -120,7 +132,7 @@ set ignorecase
 set smartcase
 
 "use git grep
-set grepprg=git\ grep\ --break\ -n\ -r\ $*\ --\ :/
+set grepprg=cd\ %:p:h\ &&\ git\ grep\ --break\ -n\ -r\ $*\ --\ :/
 
 call plug#begin('~/.local/share/nvim/plugged')
 
