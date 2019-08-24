@@ -7,7 +7,9 @@ from subprocess import Popen, PIPE, STDOUT
 
 def compose(headers, text, html):
     out = email.message.EmailMessage()
-    out.set_content(text, cte = 'quoted-printable', params = {"markup": "markdown"})
+    out.set_content(text, cte = 'quoted-printable',
+                    params = {"markup": "markdown",
+                              "format": "flowed"})
     out.add_alternative(html, maintype = 'text',
                         subtype = 'html', cte = 'quoted-printable')
     for h in headers:
