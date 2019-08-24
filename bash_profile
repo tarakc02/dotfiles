@@ -17,7 +17,7 @@ then
     alias vim="nvim"
 fi
 
-alias ll="ls -alG"
+alias ll="ls -alG --color=always"
 alias disks="df -x squashfs -x tmpfs --block-size=M"
 
 function trls() {
@@ -43,3 +43,5 @@ fi
 unset __conda_setup
 # <<< conda init <<<
 export PATH=/Library/Frameworks/GDAL.framework/Programs:$PATH
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
