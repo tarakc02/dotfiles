@@ -17,7 +17,7 @@ then
     alias vim="nvim"
 fi
 
-alias ll="ls -alG"
+alias ll="ls -alG --color=always"
 alias disks="df -x squashfs -x tmpfs --block-size=M"
 
 function trls() {
