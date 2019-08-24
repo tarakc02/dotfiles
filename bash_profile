@@ -1,6 +1,4 @@
 #!/bin/bash
-[ -r ~/.bashrc ] && . ~/.bashrc
-
 eval "$(fasd --init auto)"
 
 export EDITOR="nvim"
