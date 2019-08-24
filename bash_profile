@@ -43,3 +43,5 @@ fi
 unset __conda_setup
 # <<< conda init <<<
 export PATH=/Library/Frameworks/GDAL.framework/Programs:$PATH
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
