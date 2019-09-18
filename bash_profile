@@ -1,4 +1,11 @@
 #!/bin/bash
+
+# https://superuser.com/questions/544989/does-tmux-sort-the-path-variable
+if [ -f /etc/profile ]; then
+    PATH=""
+    source /etc/profile
+fi
+
 [ -r ~/.mac-specific ] && . ~/.mac-specific
 
 fasd_cache="$HOME/.fasd-init-bash"
@@ -52,10 +59,6 @@ fi
 unset __conda_setup
 # <<< conda init <<<
 export PATH=/Library/Frameworks/GDAL.framework/Programs:$PATH
-
-#https://github.com/conda/conda/issues/6826#issuecomment-397287212
-source $HOME/anaconda3/etc/profile.d/conda.sh
-[[ -z $TMUX ]] || conda deactivate; conda activate base
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
