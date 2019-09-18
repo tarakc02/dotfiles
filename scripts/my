@@ -24,6 +24,7 @@ Usage: $our_name action [args]
       root: show project root if in git repository
       grep: git grep in project files, use -- :/ to search from top level
       task: create new task with src, input, output dirs
+      week: open current weekly (in a new tmux window if in tmux)
 
   NOTE: to see what an action would do, use -d option to simulate the action.
   NOTE: this was copied from aer-tools, see it for more sample code
@@ -107,6 +108,23 @@ new-task() {
     mkdir -p $1/input $1/src $1/output
 }
 
+open-weekly() {
+    local fname=`date -d 'next monday' +%Y%m%d`
+    local fname="$HOME/git/weeklies/$fname.md"
+    [ -f "$fname" ] || cp "$HOME/git/weeklies/.template.md" "$fname"
+    local COLUMNS=`tmux display -p '#{pane_width}'`
+
+    if [ -z "${TMUX-}" ]; then
+        nvim '+Goyo' '+cd $HOME/git/weeklies' "$fname"
+    elif [ "$COLUMNS" -gt 165 ]; then
+        tmux split-window -p 50 -h \
+            nvim '+Goyo' '+cd $HOME/git/weeklies' "$fname"
+    else
+        tmux split-window -p 50 -v \
+            nvim '+Goyo' '+cd $HOME/git/weeklies' "$fname"
+    fi
+}
+
 # I used this to find every time I used `pdf_text`
 #find . -type f -iname "*.R" -exec grep -r -n -H -C2 --color=always "pdf_text" {} +;
 
@@ -141,6 +159,9 @@ case $action in
     # task: create new task with src, input, output dirs
     ( task )
         new-task "$@"
+        ;;
+    ( week )
+        open-weekly "$@"
         ;;
     ( * )
         abort "'$action' is not a recognized action, run: $_our_name -h"
