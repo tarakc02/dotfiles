@@ -1,13 +1,16 @@
 " a new comment
 set nocompatible
 set cursorline
-nnoremap <LocalLeader>v :set cursorline!<CR>
 set hidden
 set termguicolors
 syntax enable
 let maplocalleader = ','
 
+"https://github.com/neovim/neovim/wiki/Following-HEAD#2017040xterm2
+set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+
 nnoremap <LocalLeader><LocalLeader> ,
+nnoremap <LocalLeader>v :set cursorline!<CR>
 "layout
 set relativenumber number
 set colorcolumn=80
@@ -16,13 +19,11 @@ set listchars=tab:▸\ ,eol:¬,nbsp:·,trail:·
 
 "focus
 function! s:DimInactiveWindow()
-    set norelativenumber number
     let &l:colorcolumn='+' . join(range(0, 255), ',')
 endfunction
 
 function! s:UndimActiveWindow()
     set colorcolumn=80
-    set relativenumber number
 endfunction
 
 autocmd WinEnter * call s:UndimActiveWindow()
@@ -33,6 +34,7 @@ autocmd TermOpen * set nobuflisted
 
 " edited this out b/c it makes it slow to open nvim
 "set shell=bash\ -l
+let &shell='bash -l'
 
 " tabs
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
@@ -46,7 +48,7 @@ augroup END
 
 augroup mail_settings
     autocmd!
-    autocmd FileType mail setlocal noexpandtab tabstop=4
+    autocmd FileType mail setlocal noexpandtab tabstop=4 wrap linebreak
     autocmd FileType mail inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
     \ 'prefix': '^From:(.*)$',
     \ 'source': 'notmuch address "*"',
@@ -56,19 +58,22 @@ augroup END
 
 
 " long lines in markdown/tex
-augroup markdown_navigation
+augroup non_code_navigation
     autocmd!
-    autocmd FileType markdown,rmd,tex set wrap linebreak nolist
-    autocmd FileType markdown,rmd,tex vmap j gj
-    autocmd FileType markdown,rmd,tex vmap k gk
-    autocmd FileType markdown,rmd,tex vmap $ g$
-    autocmd FileType markdown,rmd,tex vmap ^ g^
-    autocmd FileType markdown,rmd,tex vmap 0 g0
-    autocmd FileType markdown,rmd,tex nmap j gj
-    autocmd FileType markdown,rmd,tex nmap k gk
-    autocmd FileType markdown,rmd,tex nmap $ g$
-    autocmd FileType markdown,rmd,tex nmap ^ g^
-    autocmd FileType markdown,rmd,tex nmap 0 g0
+    autocmd FileType markdown,rmd,tex,mail setlocal nocursorline
+    autocmd FileType markdown,rmd,tex,mail setlocal nonumber norelativenumber
+    autocmd FileType markdown,rmd,tex,mail setlocal nolist
+    autocmd FileType markdown,rmd,tex,mail setlocal wrap linebreak
+    autocmd FileType markdown,rmd,tex,mail vmap j gj
+    autocmd FileType markdown,rmd,tex,mail vmap k gk
+    autocmd FileType markdown,rmd,tex,mail vmap $ g$
+    autocmd FileType markdown,rmd,tex,mail vmap ^ g^
+    autocmd FileType markdown,rmd,tex,mail vmap 0 g0
+    autocmd FileType markdown,rmd,tex,mail nmap j gj
+    autocmd FileType markdown,rmd,tex,mail nmap k gk
+    autocmd FileType markdown,rmd,tex,mail nmap $ g$
+    autocmd FileType markdown,rmd,tex,mail nmap ^ g^
+    autocmd FileType markdown,rmd,tex,mail nmap 0 g0
 augroup END
 
 " cursor shape
@@ -78,39 +83,6 @@ let &t_EI.="\e[1 q"
 
 " terminal mode
 tnoremap <Esc> <C-\><C-n>
-
-" colors
-" dark0 + gray
-"let g:terminal_color_0 = "#272822"
-"let g:terminal_color_8 = "#8F908A"
-"
-"" neurtral_red + bright_red
-"let g:terminal_color_1 = "#e73c50"
-"let g:terminal_color_9 = "#5f0000"
-"
-"" neutral_green + bright_green
-"let g:terminal_color_2 = "#b8bb26"
-"let g:terminal_color_10 = "#98971a"
-"
-"" neutral_yellow + bright_yellow
-"let g:terminal_color_3 = "#E6DB74"
-"let g:terminal_color_11 = "#FD9720"
-"
-"" neutral_blue + bright_blue
-"let g:terminal_color_4 = "#66d9ef"
-"let g:terminal_color_12 = "#83a598"
-"
-"" neutral_purple + bright_purple
-"let g:terminal_color_5 = "#b16286"
-"let g:terminal_color_13 = "#d3869b"
-"
-"" neutral_aqua + faded_aqua
-"let g:terminal_color_6 = "#689d6a"
-"let g:terminal_color_14 = "#8ec07c"
-"
-"" light4 + light1
-"let g:terminal_color_7 = "#E8E8E3"
-"let g:terminal_color_15 = "#575b61"
 
 " close brackets/parens/quotes
 inoremap ( ()<C-G>U<Left>
@@ -137,8 +109,13 @@ set grepprg=cd\ %:p:h\ &&\ git\ grep\ --break\ -n\ -r\ $*\ --\ :/
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'ncm2/ncm2'
+"Plug 'autozimu/LanguageClient-neovim', {
+"            \ 'branch': 'next',
+"            \ 'do': 'bash install.sh',
+"            \ }
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-path'
+Plug 'jalvesaq/vimcmdline'
 Plug 'jalvesaq/Nvim-R'
 Plug 'gaalcaras/ncm-R'
 Plug 'ncm2/ncm2-jedi'
@@ -153,6 +130,7 @@ Plug 'godlygeek/tabular'
 Plug 'junegunn/fzf', { 'dir': '~/git/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'JuliaEditorSupport/julia-vim'
+Plug 'junegunn/goyo.vim'
 
 "Options related to Nvim-R
 vmap <Space> <Plug>RDSendSelection
@@ -184,6 +162,23 @@ colorscheme monokai
 let g:monokai_term_italic = 1
 let g:monokai_gui_italic = 1
 
+let g:terminal_color_0  = '#2d2e27' "black
+let g:terminal_color_1  = '#f92772' "pink
+let g:terminal_color_2  = '#a6e22d' "green
+let g:terminal_color_3  = '#e6db74' "yellow
+let g:terminal_color_4  = '#66d9ef' "light-blue/teal
+let g:terminal_color_5  = '#ae81ff' "purple
+let g:terminal_color_6  = '#0b939b' "blue
+let g:terminal_color_7  = '#8f908a' "light-grey
+let g:terminal_color_8  = '#64645e' "dark-grey
+let g:terminal_color_9  = '#e73c50' "red
+let g:terminal_color_10 = '#8ae234' "bright-green
+let g:terminal_color_11 = '#fce94f' "yellow
+let g:terminal_color_12 = '#729fcf'
+let g:terminal_color_13 = '#ad7fa8'
+let g:terminal_color_14 = '#00f5e9'
+let g:terminal_color_15 = '#eeeeec'
+
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 
@@ -199,4 +194,50 @@ let g:UltiSnipsSnippetsDir           = $HOME . "/.config/nvim/my-snippets"
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
+" julia
+let g:default_julia_version = '1.1'
+
+" language server
+"let g:LanguageClient_autoStart = 1
+"let g:LanguageClient_serverCommands = {
+"\   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
+"\       using LanguageServer;
+"\       using Pkg;
+"\       import StaticLint;
+"\       import SymbolServer;
+"\       env_path = dirname(Pkg.Types.Context().env.project_file);
+"\       debug = false;
+"\
+"\       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict());
+"\       server.runlinter = true;
+"\       run(server);
+"\   ']
+"\ }
+"
+"nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+"nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+"nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+function! s:goyo_enter()
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+endfunction
+
+function! s:goyo_leave()
+  " Quit Vim if this is the only remaining buffer
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
+endfunction
+
+autocmd! User GoyoEnter call <SID>goyo_enter()
+autocmd! User GoyoLeave call <SID>goyo_leave()
+
+let g:goyo_linenr = 1
 call plug#end()
