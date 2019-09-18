@@ -1,12 +1,21 @@
 #!/bin/bash
-eval "$(fasd --init auto)"
+[ -r ~/.mac-specific ] && . ~/.mac-specific
+
+fasd_cache="$HOME/.fasd-init-bash"
+if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+  fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >| "$fasd_cache"
+fi
+source "$fasd_cache"
+unset fasd_cache
+
+#eval "$(fasd --init auto)"
 
 export EDITOR="nvim"
 export VISUAL="nvim"
 export HRDAG_GIT_HOME=~/git
 
-export NVIM_TUI_ENABLE_TRUE_COLOR=1
-export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+#export NVIM_TUI_ENABLE_TRUE_COLOR=1
+#export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
 
 export FZF_COMPLETION_TRIGGER='?'
 
@@ -44,4 +53,15 @@ unset __conda_setup
 # <<< conda init <<<
 export PATH=/Library/Frameworks/GDAL.framework/Programs:$PATH
 
+#https://github.com/conda/conda/issues/6826#issuecomment-397287212
+source $HOME/anaconda3/etc/profile.d/conda.sh
+[[ -z $TMUX ]] || conda deactivate; conda activate base
+
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# fasd & fzf change directory - jump using `fasd` if given argument, filter output of `fasd` using `fzf` else
+j() {
+    #[ $# -gt 0 ] && fasd_cd -d "$*" && return
+    local dir
+    dir="$(fasd -Rdl "$1 " | fzf --height=30% --min-height=3)" && cd "${dir}" || return 1
+}
