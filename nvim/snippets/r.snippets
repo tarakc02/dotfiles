@@ -11,7 +11,6 @@ test_that($1, {
 endsnippet
 
 snippet args "task argument parsing"
-library(argparse)
 
 parser <- ArgumentParser()
 parser$add_argument($1, default = $2)
@@ -22,4 +21,9 @@ snippet switch "switch statement"
 switch(
 	$0
 )
+endsnippet
+
+snippet pacman "install/load script dependencies"
+library(pacman)
+pacman::p_load("argparse"$0)
 endsnippet

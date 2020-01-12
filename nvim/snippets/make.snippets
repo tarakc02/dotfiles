@@ -11,5 +11,21 @@ $1:
 endsnippet
 
 snippet here "here() for consistent project context"
-HERE := $(shell Rscript --vanilla -e 'write(here::here(), stdout())')
+HERE := $(shell git rev-parse --show-toplevel)
+endsnippet
+
+snippet render-rmd "render rmarkdown file"
+output/$1: \
+		src/$2.Rmd
+	Rscript -e "rmarkdown::render('$<')"
+	mv src/$1 $@
+	-rm src/$2.md
+	-rm src/$2.tex
+	-rm src/$1
+endsnippet
+
+snippet render-md "render markdown to html"
+output/$1.html: \
+		src/$1.md
+	pandoc -f markdown -t html $< -o $@
 endsnippet

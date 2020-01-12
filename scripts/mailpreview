@@ -1,0 +1,48 @@
+#!/usr/bin/env python
+
+import sys
+import email
+import email.parser
+from subprocess import Popen, PIPE, STDOUT
+
+
+def extract_headers(raw_msg):
+    parser = email.parser.HeaderParser()
+    headers = parser.parsestr(raw_msg).items()
+    return(headers)
+
+
+def extract_body(raw_msg):
+    msg = email.message_from_string(raw_msg)
+    msg_body = msg.get_payload()
+    return(msg_body)
+
+
+def md2html(md):
+    p = Popen(['pandoc', '-f', 'markdown', '-t', 'html'],
+              stdout=PIPE, stdin=PIPE, stderr=STDOUT)
+    return(p.communicate(input = bytes(md, encoding = "utf-8"))[0])
+
+
+if __name__ == '__main__':
+    raw_msg = sys.stdin.read()
+    headers = extract_headers(raw_msg)
+    body = extract_body(raw_msg)
+    header_text = [h[0] + ": " + h[1] for h in headers]
+    preview_text = """
+```
+""" + "\n".join(header_text) + """
+```
+    """
+    preview_text = preview_text + "\n\n" + body
+    preview_text = """
+---
+title: Preview email
+---
+
+    """ + preview_text
+    preview_html = md2html(preview_text)
+    sys.stdout.write(preview_html.decode('utf-8'))
+
+# done.
+

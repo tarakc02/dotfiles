@@ -1,0 +1,15 @@
+---
+title: A report
+author:
+- "[Tarak Shah](https://hrdag.org/people/tarak-shah/)"
+date: 22 December, 2019
+output: html_document
+---
+
+# An Rmd document
+
+```{r}
+x <- 7
+x + 14
+```
+

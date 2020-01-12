@@ -2,6 +2,11 @@
 set nocompatible
 set cursorline
 set hidden
+
+"tmux-related:
+"let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+"let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+
 set termguicolors
 syntax enable
 let maplocalleader = ','
@@ -61,9 +66,10 @@ augroup END
 augroup non_code_navigation
     autocmd!
     autocmd FileType markdown,rmd,tex,mail setlocal nocursorline
-    autocmd FileType markdown,rmd,tex,mail setlocal nonumber norelativenumber
+    "autocmd FileType markdown,rmd,tex,mail setlocal nonumber norelativenumber
     autocmd FileType markdown,rmd,tex,mail setlocal nolist
     autocmd FileType markdown,rmd,tex,mail setlocal wrap linebreak
+    autocmd FileType markdown,rmd,tex,mail setlocal textwidth=79
     autocmd FileType markdown,rmd,tex,mail vmap j gj
     autocmd FileType markdown,rmd,tex,mail vmap k gk
     autocmd FileType markdown,rmd,tex,mail vmap $ g$
@@ -75,6 +81,16 @@ augroup non_code_navigation
     autocmd FileType markdown,rmd,tex,mail nmap ^ g^
     autocmd FileType markdown,rmd,tex,mail nmap 0 g0
 augroup END
+
+augroup markdown_specific
+    autocmd!
+    autocmd FileType markdown command! Preview :%!my preview-md
+augroup end
+
+augroup rmarkdown_specific
+    autocmd!
+    autocmd FileType rmd command! Preview :%!my preview-rmd
+augroup end
 
 " cursor shape
 let &t_SI.="\e[5 q"
@@ -104,7 +120,8 @@ set ignorecase
 set smartcase
 
 "use git grep
-set grepprg=cd\ %:p:h\ &&\ git\ grep\ --break\ -n\ -r\ $*\ --\ :/
+"set grepprg=cd\ %:p:h\ &&\ git\ grep\ --break\ -n\ -r\ $*\ --\ :/
+set grepprg=git\ grep\ --break\ -n\ -r\ $*\ --\ :/
 
 call plug#begin('~/.local/share/nvim/plugged')
 
@@ -179,6 +196,24 @@ let g:terminal_color_13 = '#ad7fa8'
 let g:terminal_color_14 = '#00f5e9'
 let g:terminal_color_15 = '#eeeeec'
 
+let rout_color_input    = 'guifg=#8f908a' "light grey
+let rout_color_normal   = 'guifg=#eeeeec' "white
+let rout_color_number   = 'guifg=#66d9ef' "teal
+let rout_color_integer  = 'guifg=#66d9ef' "teal
+let rout_color_float    = 'guifg=#66d9ef' "teal
+let rout_color_complex  = 'guifg=#66d9ef' "teal
+let rout_color_negnum   = 'guifg=#0b939b' "blue
+let rout_color_negfloat = 'guifg=#0b939b' "blue
+let rout_color_date     = 'guifg=#fce94f' "yellow
+let rout_color_true     = 'guifg=#a6e22d' "green
+let rout_color_false    = 'guifg=#f92772' "pink
+let rout_color_inf      = 'guifg=#ffffff'
+let rout_color_constant = 'guifg=#f92772' "pink
+let rout_color_string   = 'guifg=#fce94f' "yellow
+let rout_color_error    = 'guifg=#eeeeec guibg=#e73c50'
+let rout_color_warn     = 'guifg=#e73c50'
+let rout_color_index    = 'guifg=#8f908a'
+
 autocmd BufEnter * call ncm2#enable_for_buffer()
 set completeopt=noinsert,menuone,noselect
 
@@ -239,5 +274,5 @@ endfunction
 autocmd! User GoyoEnter call <SID>goyo_enter()
 autocmd! User GoyoLeave call <SID>goyo_leave()
 
-let g:goyo_linenr = 1
+let g:goyo_linenr = 0
 call plug#end()

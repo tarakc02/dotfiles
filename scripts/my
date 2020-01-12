@@ -21,10 +21,14 @@ prepend-to-PATH-var PATH /usr/local/sbin
 Usage="
 Usage: $our_name action [args]
   Current actions are:
-      root: show project root if in git repository
-      grep: git grep in project files, use -- :/ to search from top level
+      root: show project root (git repositories)
+      ggrep: git grep entire project repo (ignoring gitignored stuff)
+      rgrep: recursive grep, with pretty highlighting
       task: create new task with src, input, output dirs
       week: open current weekly (in a new tmux window if in tmux)
+      preview-rmd: open a preview output of an Rmd file
+      preview-md: preview the output of a markdown file (default HTML, -p for pdf)
+      reply: compose reply to an email
 
   NOTE: to see what an action would do, use -d option to simulate the action.
   NOTE: this was copied from aer-tools, see it for more sample code
@@ -97,10 +101,15 @@ project-root() {
     git rev-parse --show-toplevel || abort "only works within git repositories"
 }
 
-find-in-files() {
-    git grep --break -n -p -C2 --full-name "$@" \
+ggrep() {
+    git grep --break -n -p -C2 --full-name "$@" -- :/ \
         || abort "use --no-index outside of git repos"
 }
+
+rgrep() {
+    git grep --break -n -p -C2 --full-name --no-index "$@"
+}
+
 
 new-task() {
     local args=$*
@@ -123,6 +132,63 @@ open-weekly() {
         tmux split-window -p 50 -v \
             nvim '+Goyo' '+cd $HOME/git/weeklies' "$fname"
     fi
+}
+
+preview-rmd() {
+    local dir=$(mktemp -d)
+    local rmdfile="$dir/preview.rmd"
+    if read -t 0; then
+        cat > $rmdfile
+    else
+        cp "$1" $rmdfile
+    fi
+    Rscript -e "rmarkdown::render('$rmdfile', quiet = TRUE)" > "$dir/preview.log"
+    if [[ -f "$dir/preview.html" ]]; then
+        open "$dir/preview.html"
+    elif [[ -f "$dir/preview.pdf" ]]; then
+        open "$dir/preview.pdf"
+    else
+        abort "didn't create pdf or html output"
+    fi
+    cat "$dir/preview.rmd"
+}
+
+preview-md() {
+    local dir=$(mktemp -d)
+    local mdfile="$dir/preview.md"
+    if read -t 0; then
+        cat > $mdfile
+    else
+        cp "$1" $mdfile
+    fi
+    pandoc $mdfile -f markdown -t html --standalone --self-contained --quiet \
+        -o "$dir/preview.html" > "$dir/preview.log"
+    if [[ -f "$dir/preview.html" ]]; then
+        open "$dir/preview.html"
+    elif [[ -f "$dir/preview.pdf" ]]; then
+        open "$dir/preview.pdf"
+    else
+        abort "didn't create pdf or html output"
+    fi
+    cat "$dir/preview.md"
+}
+
+preview-mail() {
+    local dir=$(mktemp -d)
+    local mailfile="$dir/preview.mail"
+    if read -t 0; then
+        cat > $mailfile
+    else
+        cp "$1" $mailfile
+    fi
+
+    cat $mailfile | mailpreview > "$dir/preview.html"
+    open "$dir/preview.html"
+    cat "$dir/preview.mail"
+}
+
+reply() {
+    notmuch reply "$*" | nvim '+set filetype=mail' '+Goyo'
 }
 
 # I used this to find every time I used `pdf_text`
@@ -153,8 +219,11 @@ case $action in
         project-root
         ;;
     # grep: git grep in project files, use `-- :/` to search from top level
-    ( grep )
-        find-in-files "$@"
+    ( ggrep )
+        ggrep "$@"
+        ;;
+    ( rgrep )
+        rgrep "$@"
         ;;
     # task: create new task with src, input, output dirs
     ( task )
@@ -162,6 +231,18 @@ case $action in
         ;;
     ( week )
         open-weekly "$@"
+        ;;
+    ( preview-rmd )
+        preview-rmd "$@"
+        ;;
+    ( preview-md )
+        preview-md "$@"
+        ;;
+    ( preview-mail )
+        preview-mail "$@"
+        ;;
+    ( reply )
+        reply "$@"
         ;;
     ( * )
         abort "'$action' is not a recognized action, run: $_our_name -h"
