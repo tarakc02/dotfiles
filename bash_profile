@@ -26,8 +26,8 @@ then
     alias vim="nvim"
 fi
 
-alias ll="ls -alG --color=always"
-alias disks="df -x squashfs -x tmpfs --block-size=M"
+alias ll="ls -alhG --color=always"
+alias disks="df -h -x squashfs -x tmpfs"
 
 function trls() {
     tree -C "$@" | less -R
