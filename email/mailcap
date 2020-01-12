@@ -19,5 +19,8 @@ application/pdf; ~/.mutt/scripts/view_attachment.sh %s pdf
 text/html; CHARSET=%{charset} ~/.mutt/scripts/view_attachment.sh %s html
 text/plain; ~/.mutt/scripts/view_mail.sh %s; needsterminal
 
+# email
+application/ics; ~/.mutt/scripts/view_attachment.sh %s ics
+
 # Unidentified files
 application/octet-stream; ~/.mutt/scripts/view_attachment.sh %s "-"
