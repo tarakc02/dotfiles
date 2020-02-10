@@ -24,11 +24,13 @@ set listchars=tab:▸\ ,eol:¬,nbsp:·,trail:·
 
 "focus
 function! s:DimInactiveWindow()
-    let &l:colorcolumn='+' . join(range(0, 255), ',')
+    "let &l:colorcolumn='+' . join(range(0, 255), ',')
+    setlocal nocursorline
 endfunction
 
 function! s:UndimActiveWindow()
-    set colorcolumn=80
+    "set colorcolumn=80
+    setlocal cursorline
 endfunction
 
 autocmd WinEnter * call s:UndimActiveWindow()
@@ -126,10 +128,10 @@ set grepprg=git\ grep\ --break\ -n\ -r\ $*\ --\ :/
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'ncm2/ncm2'
-"Plug 'autozimu/LanguageClient-neovim', {
-"            \ 'branch': 'next',
-"            \ 'do': 'bash install.sh',
-"            \ }
+Plug 'autozimu/LanguageClient-neovim', {
+            \ 'branch': 'next',
+            \ 'do': 'bash install.sh',
+            \ }
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-path'
 Plug 'jalvesaq/vimcmdline'
@@ -175,9 +177,11 @@ nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
-colorscheme monokai
-let g:monokai_term_italic = 1
-let g:monokai_gui_italic = 1
+let g:gruvbox_italic = 1
+colorscheme gruvbox
+"colorscheme monokai
+"let g:monokai_term_italic = 1
+"let g:monokai_gui_italic = 1
 
 let g:terminal_color_0  = '#2d2e27' "black
 let g:terminal_color_1  = '#f92772' "pink
@@ -230,20 +234,14 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " julia
-let g:default_julia_version = '1.1'
+let g:default_julia_version = '1.3'
 
 " language server
 "let g:LanguageClient_autoStart = 1
 "let g:LanguageClient_serverCommands = {
 "\   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
 "\       using LanguageServer;
-"\       using Pkg;
-"\       import StaticLint;
-"\       import SymbolServer;
-"\       env_path = dirname(Pkg.Types.Context().env.project_file);
-"\       debug = false;
-"\
-"\       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict());
+"\       server = LanguageServer.LanguageServerInstance(stdin, stdout, false));
 "\       server.runlinter = true;
 "\       run(server);
 "\   ']
