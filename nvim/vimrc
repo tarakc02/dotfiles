@@ -128,10 +128,10 @@ set grepprg=git\ grep\ --break\ -n\ -r\ $*\ --\ :/
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'ncm2/ncm2'
-Plug 'autozimu/LanguageClient-neovim', {
-            \ 'branch': 'next',
-            \ 'do': 'bash install.sh',
-            \ }
+"Plug 'autozimu/LanguageClient-neovim', {
+"            \ 'branch': 'next',
+"            \ 'do': 'bash install.sh',
+"            \ }
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-path'
 Plug 'jalvesaq/vimcmdline'
@@ -142,7 +142,8 @@ Plug 'sirver/UltiSnips'
 Plug 'ncm2/ncm2-ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'vim-airline/vim-airline'
-Plug 'Yavor-Ivanov/airline-monokai-subtle.vim'
+"Plug 'Yavor-Ivanov/airline-monokai-subtle.vim'
+Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'godlygeek/tabular'
@@ -167,7 +168,7 @@ let g:airline_section_c = "%f"
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'default'
 let g:airline#extensions#tabline#buffer_nr_show=1
-let g:airline_theme = 'monokai_subtle'
+let g:airline_theme = 'gruvbox'
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
@@ -183,22 +184,22 @@ colorscheme gruvbox
 "let g:monokai_term_italic = 1
 "let g:monokai_gui_italic = 1
 
-let g:terminal_color_0  = '#2d2e27' "black
-let g:terminal_color_1  = '#f92772' "pink
-let g:terminal_color_2  = '#a6e22d' "green
-let g:terminal_color_3  = '#e6db74' "yellow
-let g:terminal_color_4  = '#66d9ef' "light-blue/teal
-let g:terminal_color_5  = '#ae81ff' "purple
-let g:terminal_color_6  = '#0b939b' "blue
-let g:terminal_color_7  = '#8f908a' "light-grey
-let g:terminal_color_8  = '#64645e' "dark-grey
-let g:terminal_color_9  = '#e73c50' "red
-let g:terminal_color_10 = '#8ae234' "bright-green
-let g:terminal_color_11 = '#fce94f' "yellow
-let g:terminal_color_12 = '#729fcf'
-let g:terminal_color_13 = '#ad7fa8'
-let g:terminal_color_14 = '#00f5e9'
-let g:terminal_color_15 = '#eeeeec'
+"let g:terminal_color_0  = '#2d2e27' "black
+"let g:terminal_color_1  = '#f92772' "pink
+"let g:terminal_color_2  = '#a6e22d' "green
+"let g:terminal_color_3  = '#e6db74' "yellow
+"let g:terminal_color_4  = '#66d9ef' "light-blue/teal
+"let g:terminal_color_5  = '#ae81ff' "purple
+"let g:terminal_color_6  = '#0b939b' "blue
+"let g:terminal_color_7  = '#8f908a' "light-grey
+"let g:terminal_color_8  = '#64645e' "dark-grey
+"let g:terminal_color_9  = '#e73c50' "red
+"let g:terminal_color_10 = '#8ae234' "bright-green
+"let g:terminal_color_11 = '#fce94f' "yellow
+"let g:terminal_color_12 = '#729fcf'
+"let g:terminal_color_13 = '#ad7fa8'
+"let g:terminal_color_14 = '#00f5e9'
+"let g:terminal_color_15 = '#eeeeec'
 
 let rout_color_input    = 'guifg=#8f908a' "light grey
 let rout_color_normal   = 'guifg=#eeeeec' "white
