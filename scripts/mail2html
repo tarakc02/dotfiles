@@ -32,8 +32,7 @@ def parse_headers(raw_msg):
 
 
 def md2html(md):
-    p = Popen(['pandoc', '-f', 'markdown',
-               '-t', 'html', '--standalone', '--self-contained'],
+    p = Popen(['pandoc', '-f', 'markdown', '-t', 'html'],
               stdout=PIPE, stdin=PIPE, stderr=STDOUT)
     return(p.communicate(input = bytes(md, encoding = "utf-8"))[0])
 
