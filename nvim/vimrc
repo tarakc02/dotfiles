@@ -64,15 +64,35 @@ set listchars=tab:▸\ ,eol:¬,nbsp:·,trail:·
 "focus{{{
 function! s:DimInactiveWindow()
     setlocal nocursorline
+    setlocal nolist
 endfunction
 
 function! s:UndimActiveWindow()
     setlocal cursorline
+    setlocal list
+endfunction
+
+function! s:DimInactiveTmuxPane()
+    colorscheme monochrome
+    setlocal nocursorline
+    setlocal nolist
+    AirlineTheme monokai_subtle
+    AirlineRefresh
+endfunction
+
+function! s:UndimActiveTmuxPane()
+    colorscheme gruvbox
+    setlocal cursorline
+    setlocal list
+    AirlineTheme gruvbox
+    AirlineRefresh
 endfunction
 
 autocmd WinEnter * call s:UndimActiveWindow()
-autocmd BufEnter * call s:UndimActiveWindow()
 autocmd WinLeave * call s:DimInactiveWindow()
+
+autocmd FocusGained * call s:UndimActiveTmuxPane()
+autocmd FocusLost * call s:DimInactiveTmuxPane()
 "}}}
 
 "{{{ terminal mode
@@ -123,6 +143,10 @@ nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
+
+" navigate between open buffers
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
 "}}}
 
 "{{{ appearance
@@ -130,18 +154,17 @@ nnoremap <C-H> <C-W><C-H>
 let g:airline_section_b = '%-0.40{getcwd()}'
 let g:airline_section_c = "%f"
 
-"show buffers, navigate with Tab/Shift+Tab
+"show buffers
+let g:airline_theme = 'gruvbox'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'default'
 let g:airline#extensions#tabline#buffer_nr_show=1
-let g:airline_theme = 'gruvbox'
-nnoremap <Tab> :bnext<CR>
-nnoremap <S-Tab> :bprevious<CR>
 
 let g:monokai_term_italic = 1
 let g:monokai_gui_italic = 1
 let g:monochrome_italic_comments = 1
 let g:gruvbox_italic = 1
+let g:gruvbox_invert_tabline=1
 colorscheme gruvbox
 
 "let g:terminal_color_0  = '#2d2e27' "black

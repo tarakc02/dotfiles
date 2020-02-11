@@ -81,11 +81,11 @@ call s:hi('Visual', s:white, s:sblue)
 call s:hi('ErrorMsg', s:white, s:red)
 
 " Tildes at the bottom of a buffer, etc.
-call s:hi('NonText', s:dgray)
+call s:hi('NonText', s:black)
 
 " Folding.
 call s:hi('FoldColumn', s:dgray)
-call s:hi('Folded')
+call s:hi('Folded', s:black, s:sblue)
 
 " Line numbers gutter.
 call s:hi('LineNr', s:dgray)
@@ -110,6 +110,9 @@ call s:hi('Todo', s:black, s:yellow, s:bold)
 
 " Signs.
 call s:hi('SignColumn')
+
+" splits
+call s:hi('VertSplit', s:black, s:white)
 
 "
 " --- Programming languages ----------------------------------------------------
@@ -221,6 +224,10 @@ call s:hi('diffRemoved', s:white, s:red)
 
 call s:hi('Title', s:white, s:default_bg, s:bold)
 call s:hi('markdownHeadingDelimiter', s:white, s:default_bg, s:bold)
+call s:hi('markdownH1', s:white, s:default_bg, s:bold)
+call s:hi('markdownH2', s:white, s:default_bg, s:bold)
+call s:hi('markdownH3', s:white, s:default_bg, s:bold)
+call s:hi('markdownItalic', s:default_fg, s:default_bg, s:italic)
 call s:hi('markdownHeadingRule', s:white, s:default_bg, s:bold)
 call s:hi('markdownLinkText', s:sblue, s:default_bg, s:underline)
 
