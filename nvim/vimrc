@@ -1,107 +1,88 @@
-" a new comment
+"{{{ basic options
 set nocompatible
-set cursorline
 set hidden
 
-"tmux-related:
-"let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
-"let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
-
+set cursorline
 set termguicolors
 syntax enable
+
 let maplocalleader = ','
-
-"https://github.com/neovim/neovim/wiki/Following-HEAD#2017040xterm2
-set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-
 nnoremap <LocalLeader><LocalLeader> ,
 nnoremap <LocalLeader>v :set cursorline!<CR>
-"layout
-set relativenumber number
-set colorcolumn=80
-set list
-set listchars=tab:▸\ ,eol:¬,nbsp:·,trail:·
-
-"focus
-function! s:DimInactiveWindow()
-    "let &l:colorcolumn='+' . join(range(0, 255), ',')
-    setlocal nocursorline
-endfunction
-
-function! s:UndimActiveWindow()
-    "set colorcolumn=80
-    setlocal cursorline
-endfunction
-
-autocmd WinEnter * call s:UndimActiveWindow()
-autocmd BufEnter * call s:UndimActiveWindow()
-autocmd WinLeave * call s:DimInactiveWindow()
-
-autocmd TermOpen * set nobuflisted
-
-" edited this out b/c it makes it slow to open nvim
-"set shell=bash\ -l
-let &shell='bash -l'
+set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
 
 " tabs
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 set smartindent
-
-" makefiles use tabs
-augroup makefile_mappings
-    autocmd!
-    autocmd FileType make setlocal noexpandtab tabstop=4
-augroup END
-
-augroup mail_settings
-    autocmd!
-    autocmd FileType mail setlocal noexpandtab tabstop=4 wrap linebreak
-    autocmd FileType mail inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
-    \ 'prefix': '^From:(.*)$',
-    \ 'source': 'notmuch address "*"',
-    \ 'options': '--multi --reverse --margin 15%,0',
-    \ 'reducer': { lines -> join(lines, ',')} }))
-augroup END
-
-
-" long lines in markdown/tex
-augroup non_code_navigation
-    autocmd!
-    autocmd FileType markdown,rmd,tex,mail setlocal nocursorline
-    "autocmd FileType markdown,rmd,tex,mail setlocal nonumber norelativenumber
-    autocmd FileType markdown,rmd,tex,mail setlocal nolist
-    autocmd FileType markdown,rmd,tex,mail setlocal wrap linebreak
-    autocmd FileType markdown,rmd,tex,mail setlocal textwidth=79
-    autocmd FileType markdown,rmd,tex,mail vmap j gj
-    autocmd FileType markdown,rmd,tex,mail vmap k gk
-    autocmd FileType markdown,rmd,tex,mail vmap $ g$
-    autocmd FileType markdown,rmd,tex,mail vmap ^ g^
-    autocmd FileType markdown,rmd,tex,mail vmap 0 g0
-    autocmd FileType markdown,rmd,tex,mail nmap j gj
-    autocmd FileType markdown,rmd,tex,mail nmap k gk
-    autocmd FileType markdown,rmd,tex,mail nmap $ g$
-    autocmd FileType markdown,rmd,tex,mail nmap ^ g^
-    autocmd FileType markdown,rmd,tex,mail nmap 0 g0
-augroup END
-
-augroup markdown_specific
-    autocmd!
-    autocmd FileType markdown command! Preview :%!my preview-md
-augroup end
-
-augroup rmarkdown_specific
-    autocmd!
-    autocmd FileType rmd command! Preview :%!my preview-rmd
-augroup end
 
 " cursor shape
 let &t_SI.="\e[5 q"
 let &t_SR.="\e[4 q"
 let &t_EI.="\e[1 q"
 
-" terminal mode
-tnoremap <Esc> <C-\><C-n>
+"}}}
 
+"{{{ plugins
+call plug#begin('~/.local/share/nvim/plugged')
+
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'godlygeek/tabular'
+
+Plug 'jalvesaq/vimcmdline'
+Plug 'jalvesaq/Nvim-R'
+
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2-path'
+Plug 'gaalcaras/ncm-R'
+Plug 'ncm2/ncm2-jedi'
+Plug 'sirver/UltiSnips'
+Plug 'ncm2/ncm2-ultisnips'
+Plug 'honza/vim-snippets'
+
+Plug 'morhetz/gruvbox'
+Plug 'vim-airline/vim-airline'
+Plug 'Yavor-Ivanov/airline-monokai-subtle.vim'
+
+Plug 'junegunn/fzf', { 'dir': '~/git/fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+Plug 'JuliaEditorSupport/julia-vim'
+Plug 'junegunn/goyo.vim'
+
+call plug#end()
+"}}}
+
+"layout{{{
+set relativenumber number
+set colorcolumn=80
+set list
+set listchars=tab:▸\ ,eol:¬,nbsp:·,trail:·
+"}}}
+
+"focus{{{
+function! s:DimInactiveWindow()
+    setlocal nocursorline
+endfunction
+
+function! s:UndimActiveWindow()
+    setlocal cursorline
+endfunction
+
+autocmd WinEnter * call s:UndimActiveWindow()
+autocmd BufEnter * call s:UndimActiveWindow()
+autocmd WinLeave * call s:DimInactiveWindow()
+"}}}
+
+"{{{ terminal mode
+autocmd TermOpen * set nobuflisted
+let &shell='bash -l'
+" use <esc> to return to normal mode in terminal
+tnoremap <Esc> <C-\><C-n>
+"}}}
+
+" {{{ completion etc
 " close brackets/parens/quotes
 inoremap ( ()<C-G>U<Left>
 inoremap [ []<C-G>U<Left>
@@ -117,49 +98,34 @@ inoremap <expr>" strpart(getline('.'), col('.')-1, 1) == "\"" ? "\<Right>" : "\"
 let known_pairs = { "{}": "", "[]": "", "()": "", "\"\"": "", "''": "" }
 inoremap <expr><BS> has_key(known_pairs, getline('.')[col('.')-2:col('.')-1]) ? "\<C-G>U<Right><BS><BS>" : "\<BS>"
 
+autocmd BufEnter * call ncm2#enable_for_buffer()
+set completeopt=noinsert,menuone,noselect
+
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
+" c-j c-k for moving in snippet
+let g:UltiSnipsExpandTrigger	    = "<C-s>"
+let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsSnippetDirectories   = ["UltiSnips", "my-snippets"]
+let g:UltiSnipsSnippetsDir           = $HOME . "/.config/nvim/my-snippets"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"}}}
+
+" {{{ navigation
 "search/replace
 set ignorecase
 set smartcase
 
-"use git grep
-"set grepprg=cd\ %:p:h\ &&\ git\ grep\ --break\ -n\ -r\ $*\ --\ :/
-set grepprg=git\ grep\ --break\ -n\ -r\ $*\ --\ :/
+"window navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+"}}}
 
-call plug#begin('~/.local/share/nvim/plugged')
-
-Plug 'ncm2/ncm2'
-"Plug 'autozimu/LanguageClient-neovim', {
-"            \ 'branch': 'next',
-"            \ 'do': 'bash install.sh',
-"            \ }
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-path'
-Plug 'jalvesaq/vimcmdline'
-Plug 'jalvesaq/Nvim-R'
-Plug 'gaalcaras/ncm-R'
-Plug 'ncm2/ncm2-jedi'
-Plug 'sirver/UltiSnips'
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'vim-airline/vim-airline'
-"Plug 'Yavor-Ivanov/airline-monokai-subtle.vim'
-Plug 'morhetz/gruvbox'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'godlygeek/tabular'
-Plug 'junegunn/fzf', { 'dir': '~/git/fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'JuliaEditorSupport/julia-vim'
-Plug 'junegunn/goyo.vim'
-
-"Options related to Nvim-R
-vmap <Space> <Plug>RDSendSelection
-nmap <Space> <Plug>RDSendLine
-vmap <LocalLeader>c <Plug>RToggleComment
-nmap <LocalLeader>c <Plug>RToggleComment
-let R_assign = 0
-let R_nvim_wd = 1
-
+"{{{ appearance
 "status line via airline
 let g:airline_section_b = '%-0.40{getcwd()}'
 let g:airline_section_c = "%f"
@@ -172,17 +138,11 @@ let g:airline_theme = 'gruvbox'
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
-"window navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
-
+let g:monokai_term_italic = 1
+let g:monokai_gui_italic = 1
+let g:monochrome_italic_comments = 1
 let g:gruvbox_italic = 1
 colorscheme gruvbox
-"colorscheme monokai
-"let g:monokai_term_italic = 1
-"let g:monokai_gui_italic = 1
 
 "let g:terminal_color_0  = '#2d2e27' "black
 "let g:terminal_color_1  = '#f92772' "pink
@@ -218,40 +178,22 @@ let rout_color_string   = 'guifg=#fce94f' "yellow
 let rout_color_error    = 'guifg=#eeeeec guibg=#e73c50'
 let rout_color_warn     = 'guifg=#e73c50'
 let rout_color_index    = 'guifg=#8f908a'
+"}}}
 
-autocmd BufEnter * call ncm2#enable_for_buffer()
-set completeopt=noinsert,menuone,noselect
+"Options related to Nvim-R{{{
+vmap <Space> <Plug>RDSendSelection
+nmap <Space> <Plug>RDSendLine
+vmap <LocalLeader>c <Plug>RToggleComment
+nmap <LocalLeader>c <Plug>RToggleComment
+let R_assign = 0
+let R_nvim_wd = 1
+"}}}
 
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
-
-" c-j c-k for moving in snippet
-let g:UltiSnipsExpandTrigger	    = "<C-s>"
-let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-let g:UltiSnipsSnippetDirectories   = ["UltiSnips", "my-snippets"]
-let g:UltiSnipsSnippetsDir           = $HOME . "/.config/nvim/my-snippets"
-"let g:UltiSnipsRemoveSelectModeMappings = 0
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" julia
+" julia{{{
 let g:default_julia_version = '1.3'
+"}}}
 
-" language server
-"let g:LanguageClient_autoStart = 1
-"let g:LanguageClient_serverCommands = {
-"\   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
-"\       using LanguageServer;
-"\       server = LanguageServer.LanguageServerInstance(stdin, stdout, false));
-"\       server.runlinter = true;
-"\       run(server);
-"\   ']
-"\ }
-"
-"nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-"nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-"nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
+" goyo{{{
 function! s:goyo_enter()
   let b:quitting = 0
   let b:quitting_bang = 0
@@ -274,4 +216,9 @@ autocmd! User GoyoEnter call <SID>goyo_enter()
 autocmd! User GoyoLeave call <SID>goyo_leave()
 
 let g:goyo_linenr = 0
-call plug#end()
+"}}}
+
+"use git grep
+set grepprg=git\ grep\ --break\ -n\ -r\ $*\ --\ :/
+
+" vim: set fdm=marker fmr={{{,}}} fdl=0 foldcolumn=4:
