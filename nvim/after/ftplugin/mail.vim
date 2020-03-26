@@ -1,4 +1,4 @@
-setlocal noexpandtab tabstop=4 wrap linebreak
+setlocal wrap linebreak
 setlocal nocursorline nolist
 
 vmap j gj

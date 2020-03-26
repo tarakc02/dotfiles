@@ -5,6 +5,7 @@ set hidden
 set cursorline
 set termguicolors
 syntax enable
+set clipboard=unnamed
 
 let maplocalleader = ','
 nnoremap <LocalLeader><LocalLeader> ,
@@ -29,9 +30,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'godlygeek/tabular'
 
-Plug 'jalvesaq/vimcmdline'
-Plug 'jalvesaq/Nvim-R'
-
 Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2-path'
@@ -48,7 +46,11 @@ Plug 'Yavor-Ivanov/airline-monokai-subtle.vim'
 Plug 'junegunn/fzf', { 'dir': '~/git/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
+Plug 'jalvesaq/vimcmdline'
+Plug 'jalvesaq/Nvim-R'
 Plug 'JuliaEditorSupport/julia-vim'
+Plug 'neovimhaskell/haskell-vim'
+
 Plug 'junegunn/goyo.vim'
 
 call plug#end()
@@ -72,27 +74,29 @@ function! s:UndimActiveWindow()
     setlocal list
 endfunction
 
-function! s:DimInactiveTmuxPane()
-    colorscheme monochrome
-    setlocal nocursorline
-    setlocal nolist
-    AirlineTheme monokai_subtle
-    AirlineRefresh
-endfunction
+" this would change vim colorscheme to monochrome when focus is lost,
+" inactivated for now because it was causing some issues with Goyo
+"function! s:DimInactiveTmuxPane()
+"    colorscheme monochrome
+"    setlocal nocursorline
+"    setlocal nolist
+"    AirlineTheme monokai_subtle
+"    AirlineRefresh
+"endfunction
 
-function! s:UndimActiveTmuxPane()
-    colorscheme gruvbox
-    setlocal cursorline
-    setlocal list
-    AirlineTheme gruvbox
-    AirlineRefresh
-endfunction
+"function! s:UndimActiveTmuxPane()
+"    colorscheme gruvbox
+"    setlocal cursorline
+"    setlocal list
+"    AirlineTheme gruvbox
+"    AirlineRefresh
+"endfunction
 
 autocmd WinEnter * call s:UndimActiveWindow()
 autocmd WinLeave * call s:DimInactiveWindow()
 
-autocmd FocusGained * call s:UndimActiveTmuxPane()
-autocmd FocusLost * call s:DimInactiveTmuxPane()
+"autocmd FocusGained * call s:UndimActiveTmuxPane()
+"autocmd FocusLost * call s:DimInactiveTmuxPane()
 "}}}
 
 "{{{ terminal mode
@@ -218,6 +222,7 @@ let g:default_julia_version = '1.3'
 
 " goyo{{{
 function! s:goyo_enter()
+  set eventignore=FocusGained
   let b:quitting = 0
   let b:quitting_bang = 0
   autocmd QuitPre <buffer> let b:quitting = 1
@@ -226,6 +231,7 @@ endfunction
 
 function! s:goyo_leave()
   " Quit Vim if this is the only remaining buffer
+  set eventignore=
   if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
     if b:quitting_bang
       qa!
