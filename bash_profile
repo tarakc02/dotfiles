@@ -28,6 +28,7 @@ fi
 
 alias ll="ls -alhG --color=always"
 alias disks="df -h -x squashfs -x tmpfs"
+alias lynx="lynx -cfg=$HOME/.lynxrc -lss=$HOME/.lynx.lss"
 
 function trls() {
     tree -C "$@" | less -R
