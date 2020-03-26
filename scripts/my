@@ -28,6 +28,7 @@ Usage: $our_name action [args]
       week: open current weekly (in a new tmux window if in tmux)
       preview-rmd: open a preview output of an Rmd file
       preview-md: preview the output of a markdown file (default HTML, -p for pdf)
+      show: show an email
       reply: compose reply to an email
 
   NOTE: to see what an action would do, use -d option to simulate the action.
@@ -110,6 +111,12 @@ rgrep() {
     git grep --break -n -p -C2 --full-name --no-index "$@"
 }
 
+rdoc() {
+    Rscript --vanilla -e \
+        "tools:::Rd2txt(utils:::.getHelpFile(help(commandArgs(T)[2])))" \
+        --args "$@" | sed "s/'_'//g"
+}
+
 
 new-task() {
     local args=$*
@@ -187,6 +194,10 @@ preview-mail() {
     cat "$dir/preview.mail"
 }
 
+show() {
+    notmuch show "$*" | nvim '+set filetype=mail' '+Goyo'
+}
+
 reply() {
     notmuch reply "$*" | nvim '+set filetype=mail' '+Goyo'
 }
@@ -241,8 +252,14 @@ case $action in
     ( preview-mail )
         preview-mail "$@"
         ;;
+    ( show )
+        show "$@"
+        ;;
     ( reply )
         reply "$@"
+        ;;
+    ( rdoc )
+        rdoc "$@"
         ;;
     ( * )
         abort "'$action' is not a recognized action, run: $_our_name -h"
