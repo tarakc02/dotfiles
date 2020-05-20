@@ -1,6 +1,8 @@
 #!/bin/bash
 [ -r ~/.mac-specific ] && . ~/.mac-specific
 
+[[ -r "/usr/local/etc/profile.d/bash_completion.sh" ]] && . "/usr/local/etc/profile.d/bash_completion.sh"
+
 fasd_cache="$HOME/.fasd-init-bash"
 if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
   fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >| "$fasd_cache"
@@ -29,6 +31,7 @@ fi
 alias ll="ls -alhG --color=always"
 alias disks="df -h -x squashfs -x tmpfs"
 alias lynx="lynx -cfg=$HOME/.lynxrc -lss=$HOME/.lynx.lss"
+alias csv="column -s'|' -t"
 
 function trls() {
     tree -C "$@" | less -R
