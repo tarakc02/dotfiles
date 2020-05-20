@@ -1,9 +1,3 @@
-snippet %>% "dplyr groupby summary"
-$0%>%
-	group_by($1) %>%
-	summarise(n = n(), $2)
-endsnippet
-
 snippet test_that "testthat unit test"
 test_that($1, {
 	$2
@@ -25,5 +19,5 @@ endsnippet
 
 snippet pacman "install/load script dependencies"
 library(pacman)
-pacman::p_load("argparse"$0)
+pacman::p_load(argparse$0)
 endsnippet
