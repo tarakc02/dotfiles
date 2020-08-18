@@ -10,8 +10,8 @@ $1:
 
 endsnippet
 
-snippet here "here() for consistent project context"
-HERE := $(shell git rev-parse --show-toplevel)
+snippet proot "proj root for consistent project context"
+proot := $(shell git rev-parse --show-toplevel)
 endsnippet
 
 snippet render-rmd "render rmarkdown file"
