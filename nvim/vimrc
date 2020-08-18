@@ -5,7 +5,7 @@ set hidden
 set cursorline
 set termguicolors
 syntax enable
-set clipboard=unnamed
+"set clipboard=unnamed
 
 let maplocalleader = ','
 nnoremap <LocalLeader><LocalLeader> ,
@@ -38,6 +38,7 @@ Plug 'ncm2/ncm2-jedi'
 Plug 'sirver/UltiSnips'
 Plug 'ncm2/ncm2-ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
@@ -106,6 +107,11 @@ let &shell='bash -l'
 tnoremap <Esc> <C-\><C-n>
 "}}}
 
+"{{{ cmd line apps (built in terminal)
+let cmdline_app           = {}
+let cmdline_app['julia']   = 'JULIA_NUM_THREADS=6 julia'
+"}}}
+
 " {{{ completion etc
 " close brackets/parens/quotes
 inoremap ( ()<C-G>U<Left>
@@ -135,6 +141,32 @@ let g:UltiSnipsSnippetDirectories   = ["UltiSnips", "my-snippets"]
 let g:UltiSnipsSnippetsDir           = $HOME . "/.config/nvim/my-snippets"
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" language server
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_serverCommands = {
+\   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
+\       using LanguageServer;
+\       using Pkg;
+\       import StaticLint;
+\       import SymbolServer;
+\       env_path = dirname(Pkg.Types.Context().env.project_file);
+\       debug = true; 
+\       
+\       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "");
+\       server.runlinter = true;
+\       run(server);
+\   ']
+\ }
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
+let g:LanguageClient_loggingLevel = 'INFO'
+let g:LanguageClient_virtualTextPrefix = ''
+let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
+let g:LanguageClient_serverStderr = expand('~/.local/share/nvim/LanguageServer.log')
 "}}}
 
 " {{{ navigation
@@ -217,7 +249,7 @@ let R_nvim_wd = 1
 "}}}
 
 " julia{{{
-let g:default_julia_version = '1.3'
+let g:default_julia_version = '1.5'
 "}}}
 
 " goyo{{{
