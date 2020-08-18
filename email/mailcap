@@ -21,6 +21,8 @@ text/plain; ~/.mutt/scripts/view_mail.sh %s; needsterminal
 
 # email
 application/ics; ~/.mutt/scripts/view_attachment.sh %s ics
+application/ics; ~/.mutt/scripts/view_attachment.sh %s ics
+text/calendar; ~/.mutt/scripts/view_attachment.sh %s ics
 
 # Unidentified files
 application/octet-stream; ~/.mutt/scripts/view_attachment.sh %s "-"
