@@ -1,3 +1,8 @@
+snippet vimline "vimline"
+# vim: set ts=4 sts=0 sw=4 si fenc=utf-8 et:
+# vim: set fdm=marker fmr={{{,}}} fdl=0 foldcolumn=4:
+endsnippet
+
 snippet maketask "basic makefile"
 .PHONY: all clean
 
@@ -28,4 +33,27 @@ snippet render-md "render markdown to html"
 output/$1.html: \
 		src/$1.md
 	pandoc -f markdown -t html $< -o $@
+endsnippet
+
+snippet hdr "make-specific file-header"
+# vim: set ts=8 sts=0 sw=8 si fenc=utf-8 noet:
+# vim: set fdm=marker fmr={{{,}}} fdl=0 foldcolumn=4:
+#
+# Authors:     TS
+# Maintainers: TS
+# Copyright:   `date +"%Y"`, HRDAG, GPL v2 or later
+# =========================================
+# `!p
+import subprocess
+toplevel = subprocess.Popen(['git', 'rev-parse', '--show-toplevel'],
+stdout = subprocess.PIPE,
+stderr = subprocess.PIPE)
+
+toplevel = toplevel.communicate()[0].rstrip().decode('utf-8')
+projroot = os.path.basename(toplevel)
+
+fullpath = os.path.abspath(path)
+snip.rv = re.sub(toplevel, projroot, fullpath)
+`
+
 endsnippet
