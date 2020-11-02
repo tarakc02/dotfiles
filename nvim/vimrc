@@ -109,7 +109,7 @@ tnoremap <Esc> <C-\><C-n>
 
 "{{{ cmd line apps (built in terminal)
 let cmdline_app           = {}
-let cmdline_app['julia']   = 'JULIA_NUM_THREADS=6 julia'
+let cmdline_app['julia']   = 'JULIA_NUM_THREADS=6 julia --project=.'
 "}}}
 
 " {{{ completion etc
