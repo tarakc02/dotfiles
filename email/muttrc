@@ -89,9 +89,9 @@ set sidebar_short_path
 set sidebar_folder_indent
 set sidebar_width = 25
 set sidebar_divider_char = ' ￨ '
-set sidebar_indent_string = '  ''
+set sidebar_indent_string = '''
 #set sidebar_format = "%B %* [%?N?%N / ?%S]"
-set sidebar_format = "%B %* %?S?[?%?N?%N / ?%?S?%S]?"
+set sidebar_format = "%D %* %?S?[?%?N?%N / ?%?S?%S]?"
 
 folder-hook . 'push <collapse-all>'
 
@@ -102,10 +102,15 @@ folder-hook . 'push <collapse-all>'
 set nm_query_type = threads
 virtual-mailboxes "===     HRDAG     ==="  "notmuch://?query=folder:VERTICALSPACER"
 virtual-mailboxes "INBOX"                  "notmuch://?query=folder:hrdag/inbox"
-virtual-mailboxes "......................" "notmuch://?query=folder:DIVINBOXSTART"
-virtual-mailboxes "this-month"             "notmuch://?query=date:this_month folder:hrdag/inbox"
-virtual-mailboxes "  today"                "notmuch://?query=date:today folder:hrdag/inbox"
+#virtual-mailboxes "......................" "notmuch://?query=folder:DIVINBOXSTART"
+virtual-mailboxes "  this-month"           "notmuch://?query=date:this_month folder:hrdag/inbox"
 virtual-mailboxes "  this-week"            "notmuch://?query=date:this_week folder:hrdag/inbox"
+virtual-mailboxes "  today"                "notmuch://?query=date:today folder:hrdag/inbox"
+virtual-mailboxes "......................" "notmuch://?query=folder:DIVUNREADSTART"
+virtual-mailboxes "UNREAD"                 "notmuch://?query=folder:hrdag/inbox tag:unread"
+virtual-mailboxes "  this-week"            "notmuch://?query=folder:hrdag/inbox tag:unread date:this_week"
+virtual-mailboxes "  this-month"            "notmuch://?query=folder:hrdag/inbox tag:unread date:this_month"
+virtual-mailboxes "......................" "notmuch://?query=folder:DIVNEWSSTART"
 virtual-mailboxes "newsletters"            "notmuch://?query=from:info@datasociety.net OR from:equalfuture@upturn.org OR from:bentarnoff@substack.com OR from:Julia Evans"
 virtual-mailboxes "  upturn"               "notmuch://?query=from:equalfuture@upturn.org"
 virtual-mailboxes "  d&s"                  "notmuch://?query=from:info@datasociety.net"
