@@ -19,30 +19,35 @@ MaildirStore hrdag-local
 Path ~/Mail/hrdag/
 Inbox ~/Mail/hrdag/inbox
 
-Create Slave
 Channel hrdag-inbox
-Master :hrdag-remote:"Inbox"
-Slave :hrdag-local:inbox
+Far :hrdag-remote:"INBOX"
+Near :hrdag-local:inbox
+Create Near
 
 Channel hrdag-archive
-Master :hrdag-remote:"Archive"
-Slave :hrdag-local:archive
+Far :hrdag-remote:"Archive"
+Near :hrdag-local:archive
+Create Near
 
 Channel hrdag-drafts
-Master :hrdag-remote:"Drafts"
-Slave :hrdag-local:drafts
+Far :hrdag-remote:"Drafts"
+Near :hrdag-local:drafts
+Create Near
 
 Channel hrdag-sent
-Master :hrdag-remote:"Sent"
-Slave :hrdag-local:sent
+Far :hrdag-remote:"Sent"
+Near :hrdag-local:sent
+Create Near
 
 Channel hrdag-trash
-Master :hrdag-remote:"Trash"
-Slave :hrdag-local:trash
+Far :hrdag-remote:"Trash"
+Near :hrdag-local:trash
+Create Near
 
 Channel hrdag-junk
-Master :hrdag-remote:"Spam"
-Slave :hrdag-local:junk
+Far :hrdag-remote:"Spam"
+Near :hrdag-local:junk
+Create Near
 
 Group hrdag
 Channel hrdag-inbox
