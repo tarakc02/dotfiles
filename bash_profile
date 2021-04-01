@@ -12,6 +12,7 @@ unset fasd_cache
 
 #eval "$(fasd --init auto)"
 
+export LC_ALL="en_US.UTF-8"
 export EDITOR="nvim"
 export VISUAL="nvim"
 export HRDAG_GIT_HOME=~/git
