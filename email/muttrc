@@ -151,7 +151,7 @@ bind index,pager \Cj sidebar-next
 bind index,pager \Ck sidebar-prev
 bind index,pager \Cl sidebar-open
 
-macro compose ,h "| pandoc -f markdown -t html -o /tmp/neomutt-alternative.html<enter>\
+macro compose ,h "| pandoc -f markdown -t html --standalone --self-contained --quiet -o /tmp/neomutt-alternative.html<enter>\
 <attach-file>/tmp/neomutt-alternative.html<enter>\
 <tag-entry><previous-entry><tag-entry><group-alternatives>"
 
