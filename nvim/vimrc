@@ -16,6 +16,9 @@ set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr
 set tabstop=4 softtabstop=0 expandtab shiftwidth=4 smarttab
 set smartindent
 
+"folding
+set fdm=marker fmr={{{,}}} fdl=0 foldcolumn=4
+
 " cursor shape
 let &t_SI.="\e[5 q"
 let &t_SR.="\e[4 q"
@@ -38,7 +41,7 @@ Plug 'ncm2/ncm2-jedi'
 Plug 'sirver/UltiSnips'
 Plug 'ncm2/ncm2-ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+"Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
@@ -50,7 +53,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'jalvesaq/vimcmdline'
 Plug 'jalvesaq/Nvim-R'
 Plug 'JuliaEditorSupport/julia-vim'
-Plug 'neovimhaskell/haskell-vim'
+"Plug 'neovimhaskell/haskell-vim'
 
 Plug 'junegunn/goyo.vim'
 
@@ -143,30 +146,30 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " language server
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_serverCommands = {
-\   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
-\       using LanguageServer;
-\       using Pkg;
-\       import StaticLint;
-\       import SymbolServer;
-\       env_path = dirname(Pkg.Types.Context().env.project_file);
-\       debug = true; 
-\       
-\       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "");
-\       server.runlinter = true;
-\       run(server);
-\   ']
-\ }
-
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
-let g:LanguageClient_loggingLevel = 'INFO'
-let g:LanguageClient_virtualTextPrefix = ''
-let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
-let g:LanguageClient_serverStderr = expand('~/.local/share/nvim/LanguageServer.log')
+"let g:LanguageClient_autoStart = 1
+"let g:LanguageClient_serverCommands = {
+"\   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
+"\       using LanguageServer;
+"\       using Pkg;
+"\       import StaticLint;
+"\       import SymbolServer;
+"\       env_path = dirname(Pkg.Types.Context().env.project_file);
+"\       debug = true; 
+"\       
+"\       server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "");
+"\       server.runlinter = true;
+"\       run(server);
+"\   ']
+"\ }
+"
+"nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+"nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+"nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+"
+"let g:LanguageClient_loggingLevel = 'INFO'
+"let g:LanguageClient_virtualTextPrefix = ''
+"let g:LanguageClient_loggingFile =  expand('~/.local/share/nvim/LanguageClient.log')
+"let g:LanguageClient_serverStderr = expand('~/.local/share/nvim/LanguageServer.log')
 "}}}
 
 " {{{ navigation
