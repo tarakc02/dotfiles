@@ -1,18 +1,23 @@
+priority 1
 snippet vimline "vimline"
 # vim: set ts=8 sts=0 sw=8 si fenc=utf-8 noet:
 # vim: set fdm=marker fmr={{{,}}} fdl=0 foldcolumn=4:
 endsnippet
 
 snippet maketask "basic makefile"
+input := $1
+output := output/$2
+src := src/$3
+
 .PHONY: all clean
 
-all: $1
+all: $(output)
 
 clean: 
-		-rm -r output/*
+	-rm -r output/*
 
-$1:
-
+$(output): $(src) $(input)
+	$4
 endsnippet
 
 snippet proot "proj root for consistent project context"
@@ -33,24 +38,4 @@ snippet render-md "render markdown to html"
 output/$1.html: \
 		src/$1.md
 	pandoc -f markdown -t html $< -o $@
-endsnippet
-
-snippet hdr "make-specific file-header"
-# Authors:     TS
-# Maintainers: TS
-# Copyright:   `date +"%Y"`, HRDAG, GPL v2 or later
-# =========================================
-# `!p
-import subprocess
-toplevel = subprocess.Popen(['git', 'rev-parse', '--show-toplevel'],
-stdout = subprocess.PIPE,
-stderr = subprocess.PIPE)
-
-toplevel = toplevel.communicate()[0].rstrip().decode('utf-8')
-projroot = os.path.basename(toplevel)
-
-fullpath = os.path.abspath(path)
-snip.rv = re.sub(toplevel, projroot, fullpath)
-`
-
 endsnippet
