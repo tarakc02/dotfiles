@@ -154,8 +154,10 @@ preview-rmd() {
         open "$dir/preview.html"
     elif [[ -f "$dir/preview.pdf" ]]; then
         open "$dir/preview.pdf"
+    elif [[ -f "$dir/preview.md" ]]; then
+        nvim "$dir/preview.md"
     else
-        abort "didn't create pdf or html output"
+        abort "didn't create pdf, html, or markdown output"
     fi
     cat "$dir/preview.rmd"
 }
