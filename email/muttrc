@@ -5,8 +5,11 @@ set sendmail = "/usr/local/bin/msmtp -a hrdag"
 set folder = ~/Mail
 set header_cache = "~/.mutt/cache/headers"
 set message_cachedir = "~/.mutt/cache/bodies"
+# https://github.com/neomutt/neomutt/issues/2891
+set nm_default_url = "notmuch://`notmuch config get database.path`"
+set nm_open_timeout = 0
 
-set spoolfile = "+hrdag/inbox"
+set spoolfile = "notmuch://?query=folder:hrdag/inbox"
 set record = ""
 set postponed = "+hrdag/drafts"
 set trash = "+hrdag/trash"
@@ -24,7 +27,8 @@ set crypt_replysignencrypted = yes
 # behavior
 set wait_key = no
 set thorough_search
-set mail_check_stats
+set mail_check_stats = no
+set mail_check = 1000
 unset confirmappend
 unset move
 unset mark_old
@@ -90,38 +94,30 @@ set sidebar_folder_indent
 set sidebar_width = 25
 set sidebar_divider_char = ' ￨ '
 set sidebar_indent_string = '''
-#set sidebar_format = "%B %* [%?N?%N / ?%S]"
 set sidebar_format = "%D %* %?S?[?%?N?%N / ?%?S?%S]?"
 
 folder-hook . 'push <collapse-all>'
 
-#mailboxes =.HRDAG.
-#mailboxes ="======="
-#mailboxes =hrdag/inbox =hrdag/archive =hrdag/sent =hrdag/drafts =hrdag/junk =hrdag/trash
-
 set nm_query_type = threads
-virtual-mailboxes "===     HRDAG     ==="  "notmuch://?query=folder:VERTICALSPACER"
+
 virtual-mailboxes "INBOX"                  "notmuch://?query=folder:hrdag/inbox"
-#virtual-mailboxes "......................" "notmuch://?query=folder:DIVINBOXSTART"
-virtual-mailboxes "  this-month"           "notmuch://?query=date:this_month folder:hrdag/inbox"
+virtual-mailboxes "  recent"               "notmuch://?query=folder:hrdag/inbox date:2_weeks_ago..today"
 virtual-mailboxes "  this-week"            "notmuch://?query=date:this_week folder:hrdag/inbox"
+virtual-mailboxes "  this-month"           "notmuch://?query=date:this_month folder:hrdag/inbox"
 virtual-mailboxes "  today"                "notmuch://?query=date:today folder:hrdag/inbox"
 virtual-mailboxes "......................" "notmuch://?query=folder:DIVUNREADSTART"
 virtual-mailboxes "UNREAD"                 "notmuch://?query=folder:hrdag/inbox tag:unread"
+virtual-mailboxes "  recent"               "notmuch://?query=folder:hrdag/inbox date:2_weeks_ago..today tag:unread"
 virtual-mailboxes "  this-week"            "notmuch://?query=folder:hrdag/inbox tag:unread date:this_week"
 virtual-mailboxes "  this-month"            "notmuch://?query=folder:hrdag/inbox tag:unread date:this_month"
-virtual-mailboxes "......................" "notmuch://?query=folder:DIVNEWSSTART"
-virtual-mailboxes "newsletters"            "notmuch://?query=from:info@datasociety.net OR from:equalfuture@upturn.org OR from:bentarnoff@substack.com OR from:Julia Evans"
-virtual-mailboxes "  upturn"               "notmuch://?query=from:equalfuture@upturn.org"
-virtual-mailboxes "  d&s"                  "notmuch://?query=from:info@datasociety.net"
-virtual-mailboxes "  metal"                "notmuch://?query=from:bentarnoff@substack.com"
-virtual-mailboxes "  zines"                "notmuch://?query=from:Julia Evans"
-virtual-mailboxes "weeklies"               "notmuch://?query=subject:'week of'"
-virtual-mailboxes "......................" "notmuch://?query=folder:DIVINBOXEND"
+virtual-mailboxes "......................" "notmuch://?query=folder:DIVWKSTART"
+virtual-mailboxes "weeklies"               "notmuch://?query=subject:'/^[A-Z]{2,5}/' NEAR/2 subject:'week of'"
+virtual-mailboxes "  recent"               "notmuch://?query=subject:'/^[A-Z]{2,5}/' NEAR/2 subject:'week of' date:2_weeks_ago..today"
+virtual-mailboxes "  this-week"            "notmuch://?query=subject:'/^[A-Z]{2,5}/' NEAR/2 subject:'week of' date:this_week"
+virtual-mailboxes "  this-month"           "notmuch://?query=subject:'/^[A-Z]{2,5}/' NEAR/2 subject:'week of' date:this_month"
+virtual-mailboxes "......................" "notmuch://?query=folder:DIVETCSTART"
 virtual-mailboxes "SENT"                   "notmuch://?query=folder:hrdag/sent"
 virtual-mailboxes "DRAFTS"                 "notmuch://?query=folder:hrdag/drafts"
-virtual-mailboxes "JUNK"                   "notmuch://?query=folder:hrdag/junk"
-virtual-mailboxes "TRASH"                  "notmuch://?query=folder:hrdag/trash"
 
 
 macro index,pager \Cr "<shell-escape>mbsync -a<enter><shell-escape>notmuch new<enter>"
