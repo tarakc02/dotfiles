@@ -28,8 +28,10 @@ let &t_EI.="\e[1 q"
 "}}}
 
 "{{{ plugins
-let g:python3_host_prog='/Users/tshah/anaconda3/envs/pynvim/bin/python'
-let $VIRTUAL_ENV = '/Users/tshah/anaconda3/envs/pynvim'
+set pyxversion=3
+"let $VIRTUAL_ENV = '/usr/local/Caskroom/miniconda/base/envs/pynvim'
+let g:python3_host_prog='/usr/local/Caskroom/miniconda/base/envs/pynvim/bin/python'
+let g:python_host_prog='/usr/local/Caskroom/miniconda/base/envs/pynvim2/bin/python'
 
 call plug#begin('~/.local/share/nvim/plugged')
 
@@ -37,14 +39,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'godlygeek/tabular'
 
-"Plug 'ncm2/ncm2'
-"Plug 'roxma/nvim-yarp'
-"Plug 'ncm2/ncm2-path'
-"Plug 'ncm2/ncm2-jedi'
-Plug 'sirver/UltiSnips'
-"Plug 'ncm2/ncm2-ultisnips'
+Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
-"Plug 'neovim/nvim-lspconfig'
 
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
@@ -57,9 +53,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'jalvesaq/vimcmdline'
 Plug 'jalvesaq/Nvim-R'
-"Plug 'gaalcaras/ncm-R'
 Plug 'JuliaEditorSupport/julia-vim'
-"Plug 'neovimhaskell/haskell-vim'
 
 Plug 'junegunn/goyo.vim'
 
@@ -118,7 +112,7 @@ tnoremap <Esc> <C-\><C-n>
 
 "{{{ cmd line apps (built in terminal)
 let cmdline_app           = {}
-let cmdline_app['julia']   = 'JULIA_NUM_THREADS=6 julia --project=.'
+let cmdline_app['julia']   = 'julia --threads=auto --project=.'
 let cmdline_app['r']   = 'R'
 "}}}
 
@@ -266,6 +260,24 @@ autocmd! User GoyoLeave call <SID>goyo_leave()
 
 let g:goyo_linenr = 0
 "}}}
+
+" coc.nvim {{{
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : 
+                                           \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+" }}}
 
 "use git grep
 set grepprg=git\ grep\ --break\ -n\ -r\ $*\ --\ :/
