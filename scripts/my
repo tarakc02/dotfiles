@@ -30,6 +30,8 @@ Usage: $our_name action [args]
       preview-md: preview the output of a markdown file (default HTML, -p for pdf)
       show: show an email
       reply: compose reply to an email
+      sample: sample a random file from a collection defined by location and pattern
+      symlink-audit: audit a directory tree for broken symlinks
 
   NOTE: to see what an action would do, use -d option to simulate the action.
   NOTE: this was copied from aer-tools, see it for more sample code
@@ -170,7 +172,7 @@ preview-md() {
     else
         cp "$1" $mdfile
     fi
-    pandoc $mdfile -f markdown -t html --standalone --self-contained --quiet \
+    pandoc $mdfile -f markdown -t html --quiet \
         -o "$dir/preview.html" > "$dir/preview.log"
     if [[ -f "$dir/preview.html" ]]; then
         open "$dir/preview.html"
@@ -197,11 +199,23 @@ preview-mail() {
 }
 
 show() {
-    notmuch show "$*" | nvim '+set filetype=mail' '+Goyo'
+    notmuch show "$*" | nvim '+set filetype=mail'
 }
 
 reply() {
     notmuch reply "$*" | nvim '+set filetype=mail' '+Goyo'
+}
+
+sample() {
+    find "$1" -type f -iname "$2" | shuf | head -1
+}
+
+symlink-audit() {
+    local links=$(find "$1" -type l)
+    local targets=$( echo "$links" | xargs readlink -fm )
+    local missing=$(echo "$targets" | while read fname; do test -f ${fname}; echo $?; done)
+
+    paste -d'|' <(echo "$links") <(echo "$targets") <(echo "$missing")
 }
 
 # I used this to find every time I used `pdf_text`
@@ -262,6 +276,12 @@ case $action in
         ;;
     ( rdoc )
         rdoc "$@"
+        ;;
+    ( sample )
+        sample "$@"
+        ;;
+    ( symlink-audit )
+        symlink-audit "$@"
         ;;
     ( * )
         abort "'$action' is not a recognized action, run: $_our_name -h"
