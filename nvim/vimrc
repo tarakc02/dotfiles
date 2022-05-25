@@ -112,7 +112,7 @@ tnoremap <Esc> <C-\><C-n>
 
 "{{{ cmd line apps (built in terminal)
 let cmdline_app           = {}
-let cmdline_app['julia']   = 'julia --threads=auto --project=.'
+let cmdline_app['julia']   = 'julia --threads=auto --project'
 let cmdline_app['r']   = 'R'
 "}}}
 
@@ -231,7 +231,7 @@ let R_nvim_wd = 1
 "}}}
 
 " julia{{{
-let g:default_julia_version = '1.7.0'
+let g:default_julia_version = '1.7.2'
 "}}}
 
 " goyo{{{
