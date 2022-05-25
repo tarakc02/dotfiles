@@ -147,9 +147,17 @@ bind index,pager \Cj sidebar-next
 bind index,pager \Ck sidebar-prev
 bind index,pager \Cl sidebar-open
 
-macro compose ,h "| pandoc -f markdown -t html --standalone --self-contained --quiet -o /tmp/neomutt-alternative.html<enter>\
+macro compose ,h "<first-entry><enter-command>set wait_key=no<enter>\
+<pipe-entry>pandoc -f markdown -t html --quiet -o /tmp/neomutt-alternative.html<enter>\
 <attach-file>/tmp/neomutt-alternative.html<enter>\
-<tag-entry><previous-entry><tag-entry><group-alternatives>"
+<toggle-unlink><toggle-disposition>\
+<tag-entry><first-entry><tag-entry><group-alternatives>
+#<enter-command>set wait_key=yes<enter><send-message>" \
+#"send the message as 'multipart/alternative'"
+
+#macro compose ,h "| pandoc -f markdown -t html --standalone --self-contained --quiet -o /tmp/neomutt-alternative.html<enter>\
+#<attach-file>/tmp/neomutt-alternative.html<enter>\
+#<tag-entry><previous-entry><tag-entry><group-alternatives>"
 
 set editor = "nvim '+set filetype=mail' '+Goyo'"
 
