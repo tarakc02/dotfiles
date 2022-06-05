@@ -5,7 +5,7 @@
     <key>EnvironmentVariables</key>
     <dict>
         <key>PATH</key>
-        <string>/usr/local/bin</string>
+        <string>/opt/homebrew/bin</string>
     </dict>
 	<key>Label</key>
 	<string>org.tshah.mbsync.service</string>
@@ -13,7 +13,7 @@
 	<array>
         <string>bash</string>
         <string>-c</string>
-        <string>/usr/local/bin/mbsync -Va;/usr/local/bin/notmuch new</string>
+        <string>/opt/homebrew/opt/isync/bin/mbsync -a;/opt/homebrew/opt/notmuch/bin/notmuch new</string>
 	</array>
 	<key>StartInterval</key>
 	<integer>120</integer>
