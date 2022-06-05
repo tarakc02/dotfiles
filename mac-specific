@@ -1,18 +1,18 @@
 #!/bin/bash
 
 # https://superuser.com/questions/544989/does-tmux-sort-the-path-variable
-if [ -f /etc/profile ]; then
-    PATH=""
-    source /etc/profile
-fi
+#if [ -f /etc/profile ]; then
+#    PATH=""
+#    source /etc/profile
+#fi
 
-export PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
-PATH="/usr/local/opt/ed/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/gnu-indent/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/gnu-tar/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/gnu-which/libexec/gnubin:$PATH"
-PATH="/usr/local/opt/grep/libexec/gnubin:$PATH"
+PATH="$(brew --prefix coreutils)/libexec/gnubin:/usr/local/bin:$PATH"
+PATH="$(brew --prefix ed)/libexec/gnubin:$PATH"
+PATH="$(brew --prefix findutils)/libexec/gnubin:$PATH"
+PATH="$(brew --prefix gnu-indent)/libexec/gnubin:$PATH"
+PATH="$(brew --prefix gnu-sed)/libexec/gnubin:$PATH"
+PATH="$(brew --prefix gnu-tar)/libexec/gnubin:$PATH"
+PATH="$(brew --prefix gnu-which)/libexec/gnubin:$PATH"
+PATH="$(brew --prefix grep)/libexec/gnubin:$PATH"
 
 set -o vi

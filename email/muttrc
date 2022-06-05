@@ -1,6 +1,6 @@
 set realname = "Tarak Shah"
 set from = "tarak@hrdag.org"
-set sendmail = "/usr/local/bin/msmtp -a hrdag"
+set sendmail = "/opt/homebrew/bin/msmtp -a hrdag"
 
 set folder = ~/Mail
 set header_cache = "~/.mutt/cache/headers"
@@ -28,7 +28,7 @@ set crypt_replysignencrypted = yes
 set wait_key = no
 set thorough_search
 set mail_check_stats = no
-set mail_check = 1000
+set mail_check = 5
 unset confirmappend
 unset move
 unset mark_old

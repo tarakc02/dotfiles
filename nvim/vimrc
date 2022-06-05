@@ -30,8 +30,8 @@ let &t_EI.="\e[1 q"
 "{{{ plugins
 set pyxversion=3
 "let $VIRTUAL_ENV = '/usr/local/Caskroom/miniconda/base/envs/pynvim'
-let g:python3_host_prog='/usr/local/Caskroom/miniconda/base/envs/pynvim/bin/python'
-let g:python_host_prog='/usr/local/Caskroom/miniconda/base/envs/pynvim2/bin/python'
+"let g:python3_host_prog='/usr/local/Caskroom/miniconda/base/envs/pynvim/bin/python'
+"let g:python_host_prog='/usr/local/Caskroom/miniconda/base/envs/pynvim2/bin/python'
 
 call plug#begin('~/.local/share/nvim/plugged')
 
