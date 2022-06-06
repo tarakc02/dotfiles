@@ -113,6 +113,7 @@ tnoremap <Esc> <C-\><C-n>
 "{{{ cmd line apps (built in terminal)
 let cmdline_app           = {}
 let cmdline_app['julia']   = 'julia --threads=auto --project'
+let cmdline_app['python'] = 'python'
 let cmdline_app['r']   = 'R'
 "}}}
 
