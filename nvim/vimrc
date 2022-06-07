@@ -30,8 +30,8 @@ let &t_EI.="\e[1 q"
 "{{{ plugins
 set pyxversion=3
 "let $VIRTUAL_ENV = '/usr/local/Caskroom/miniconda/base/envs/pynvim'
-let g:python3_host_prog='/usr/local/Caskroom/miniconda/base/envs/pynvim/bin/python'
-let g:python_host_prog='/usr/local/Caskroom/miniconda/base/envs/pynvim2/bin/python'
+""let g:python3_host_prog='/usr/local/Caskroom/miniconda/base/envs/pynvim/bin/python'
+""let g:python_host_prog='/usr/local/Caskroom/miniconda/base/envs/pynvim2/bin/python'
 
 call plug#begin('~/.local/share/nvim/plugged')
 
@@ -43,19 +43,19 @@ Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
 
 Plug 'morhetz/gruvbox'
-Plug 'vim-airline/vim-airline'
-Plug 'Yavor-Ivanov/airline-monokai-subtle.vim'
+""Plug 'vim-airline/vim-airline'
+""Plug 'Yavor-Ivanov/airline-monokai-subtle.vim'
 
 Plug 'junegunn/fzf', { 'dir': '~/git/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+""Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-Plug 'jalvesaq/vimcmdline'
+""Plug 'jalvesaq/vimcmdline'
 Plug 'jalvesaq/Nvim-R'
-Plug 'JuliaEditorSupport/julia-vim'
+""Plug 'JuliaEditorSupport/julia-vim'
 
-Plug 'junegunn/goyo.vim'
+""Plug 'junegunn/goyo.vim'
 
 call plug#end()
 "}}}
@@ -104,7 +104,7 @@ autocmd WinLeave * call s:DimInactiveWindow()
 "}}}
 
 "{{{ terminal mode
-autocmd TermOpen * set nobuflisted foldcolumn=0
+autocmd TerminalOpen * set nobuflisted foldcolumn=0
 let &shell='bash'
 " use <esc> to return to normal mode in terminal
 tnoremap <Esc> <C-\><C-n>
@@ -113,7 +113,6 @@ tnoremap <Esc> <C-\><C-n>
 "{{{ cmd line apps (built in terminal)
 let cmdline_app           = {}
 let cmdline_app['julia']   = 'julia --threads=auto --project'
-let cmdline_app['r']   = 'R'
 "}}}
 
 " {{{ completion etc
@@ -184,6 +183,7 @@ let g:monochrome_italic_comments = 1
 let g:gruvbox_italic = 1
 let g:gruvbox_invert_tabline=1
 colorscheme gruvbox
+set background=dark
 
 "let g:terminal_color_0  = '#2d2e27' "black
 "let g:terminal_color_1  = '#f92772' "pink
@@ -229,55 +229,6 @@ nmap <LocalLeader>c <Plug>RToggleComment
 let R_assign = 0
 let R_nvim_wd = 1
 "}}}
-
-" julia{{{
-let g:default_julia_version = '1.7.2'
-"}}}
-
-" goyo{{{
-function! s:goyo_enter()
-  set eventignore=FocusGained
-  let b:quitting = 0
-  let b:quitting_bang = 0
-  autocmd QuitPre <buffer> let b:quitting = 1
-  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
-endfunction
-
-function! s:goyo_leave()
-  " Quit Vim if this is the only remaining buffer
-  set eventignore=
-  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
-    if b:quitting_bang
-      qa!
-    else
-      qa
-    endif
-  endif
-endfunction
-
-autocmd! User GoyoEnter call <SID>goyo_enter()
-autocmd! User GoyoLeave call <SID>goyo_leave()
-
-let g:goyo_linenr = 0
-"}}}
-
-" coc.nvim {{{
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : 
-                                           \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
-" }}}
 
 "use git grep
 set grepprg=git\ grep\ --break\ -n\ -r\ $*\ --\ :/

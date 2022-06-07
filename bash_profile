@@ -13,8 +13,8 @@ unset fasd_cache
 #eval "$(fasd --init auto)"
 
 export LC_ALL="en_US.UTF-8"
-export EDITOR="nvim"
-export VISUAL="nvim"
+export EDITOR="vim"
+export VISUAL="vim"
 export HRDAG_GIT_HOME=~/git
 
 #export NVIM_TUI_ENABLE_TRUE_COLOR=1
