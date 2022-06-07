@@ -15,6 +15,10 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 export HRDAG_GIT_HOME=~/git
 
+# note: on newer macs, if you use bash you get a message about the default
+# shell being zsh
+export BASH_SILENCE_DEPRECATION_WARNING=1
+
 export FZF_COMPLETION_TRIGGER='?'
 
 PS1="\n\[\e[32m\]\w\n@ \h (\j): \[\e[0;00m\]"
