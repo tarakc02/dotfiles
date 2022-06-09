@@ -10,15 +10,12 @@ fi
 source "$fasd_cache"
 unset fasd_cache
 
-#eval "$(fasd --init auto)"
-
 export LC_ALL="en_US.UTF-8"
 export EDITOR="vim"
 export VISUAL="vim"
 export HRDAG_GIT_HOME=~/git
 
-#export NVIM_TUI_ENABLE_TRUE_COLOR=1
-#export NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+alias ssh="ssh -i ~/git/ssh-stuff/id_ed25519"
 
 export FZF_COMPLETION_TRIGGER='?'
 
