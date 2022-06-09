@@ -43,8 +43,8 @@ Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
 
 Plug 'morhetz/gruvbox'
-""Plug 'vim-airline/vim-airline'
-""Plug 'Yavor-Ivanov/airline-monokai-subtle.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'Yavor-Ivanov/airline-monokai-subtle.vim'
 
 Plug 'junegunn/fzf', { 'dir': '~/git/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
