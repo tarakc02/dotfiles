@@ -4,6 +4,7 @@ endsnippet
 
 snippet main
 if __name__ == '__main__':
+	$1
 endsnippet
 
 snippet args
@@ -11,4 +12,9 @@ def getargs():
     parser = argparse.ArgumentParser()
     parser.add_argument("--$1", default="$2")
     return parser.parse_args()
+endsnippet
+
+snippet readfile "reads `fname` all at once and closes the connection"
+with open($1, 'r') as f_handle:
+	mydata = read(f_handle)
 endsnippet
