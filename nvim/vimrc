@@ -70,12 +70,12 @@ set listchars=tab:▸\ ,eol:¬,nbsp:·,trail:·
 "focus{{{
 function! s:DimInactiveWindow()
     setlocal nocursorline
-    setlocal nolist
+    ""setlocal nolist
 endfunction
 
 function! s:UndimActiveWindow()
     setlocal cursorline
-    setlocal list
+    ""setlocal list
 endfunction
 
 " this would change vim colorscheme to monochrome when focus is lost,
@@ -260,6 +260,8 @@ autocmd! User GoyoEnter call <SID>goyo_enter()
 autocmd! User GoyoLeave call <SID>goyo_leave()
 
 let g:goyo_linenr = 0
+let g:goyo_width = 90
+
 "}}}
 
 " coc.nvim {{{
