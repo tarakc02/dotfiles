@@ -38,6 +38,7 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'godlygeek/tabular'
+Plug 'tpope/vim-fugitive'
 
 Plug 'sirver/ultisnips'
 Plug 'honza/vim-snippets'
