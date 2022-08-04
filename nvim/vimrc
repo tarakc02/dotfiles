@@ -142,13 +142,13 @@ set completeopt=noinsert,menuone,noselect
 "let g:ncm2_jedi#environment_path = '/Users/tshah/anaconda3/envs/pynvim'
 
 " c-j c-k for moving in snippet
-let g:UltiSnipsExpandTrigger	    = "<C-s>"
-let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-let g:UltiSnipsSnippetDirectories   = ["UltiSnips", "my-snippets"]
-let g:UltiSnipsSnippetsDir           = $HOME . "/.config/nvim/my-snippets"
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+"let g:UltiSnipsExpandTrigger	    = "<C-s>"
+"let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+"let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+"let g:UltiSnipsSnippetDirectories   = ["UltiSnips", "my-snippets"]
+"let g:UltiSnipsSnippetsDir           = $HOME . "/.config/nvim/my-snippets"
+"inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+"inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 "}}}
 
@@ -278,6 +278,18 @@ function! s:show_documentation()
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
+
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+" Insert <tab> when previous text is space, refresh completion if not.
+inoremap <silent><expr> <TAB>
+            \ coc#pum#visible() ? coc#pum#next(1):
+            \ <SID>check_back_space() ? "\<Tab>" :
+            \ coc#refresh()
+  inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 " }}}
 
 "use git grep
