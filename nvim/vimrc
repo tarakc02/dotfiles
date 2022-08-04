@@ -142,11 +142,11 @@ set completeopt=noinsert,menuone,noselect
 "let g:ncm2_jedi#environment_path = '/Users/tshah/anaconda3/envs/pynvim'
 
 " c-j c-k for moving in snippet
-"let g:UltiSnipsExpandTrigger	    = "<C-s>"
-"let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
-"let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
-"let g:UltiSnipsSnippetDirectories   = ["UltiSnips", "my-snippets"]
-"let g:UltiSnipsSnippetsDir           = $HOME . "/.config/nvim/my-snippets"
+let g:UltiSnipsExpandTrigger	    = "<C-s>"
+let g:UltiSnipsJumpForwardTrigger	= "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger	= "<c-k>"
+let g:UltiSnipsSnippetDirectories   = ["UltiSnips", "my-snippets"]
+let g:UltiSnipsSnippetsDir           = $HOME . "/.config/nvim/my-snippets"
 "inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 "inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 

@@ -16,5 +16,9 @@
     match = red
     selected = white
     separator = dim blue
+[init]
+    defaultBranch = main
 [credential]
 	helper = cache
+[push]
+    default = simple
