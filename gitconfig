@@ -16,3 +16,5 @@
     match = red
     selected = white
     separator = dim blue
+[credential]
+	helper = cache
