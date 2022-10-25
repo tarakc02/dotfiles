@@ -218,6 +218,12 @@ symlink-audit() {
     paste -d'|' <(echo "$links") <(echo "$targets") <(echo "$missing")
 }
 
+lookup() {
+    local fname="/usr/share/dict/words"
+    [ -f "$fname" ] || abort "only works on FreeBSD machines"
+    grep "$1" "$fname"
+}
+
 # I used this to find every time I used `pdf_text`
 #find . -type f -iname "*.R" -exec grep -r -n -H -C2 --color=always "pdf_text" {} +;
 
@@ -282,6 +288,9 @@ case $action in
         ;;
     ( symlink-audit )
         symlink-audit "$@"
+        ;;
+    ( lookup )
+        lookup "$@"
         ;;
     ( * )
         abort "'$action' is not a recognized action, run: $_our_name -h"

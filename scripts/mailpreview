@@ -19,8 +19,7 @@ def extract_body(raw_msg):
 
 
 def md2html(md):
-    p = Popen(['pandoc', '-f', 'markdown', '-t', 'html',
-               '--standalone', '--self-contained', '--quiet'],
+    p = Popen(['pandoc', '-f', 'markdown', '-t', 'html', '--quiet'],
               stdout=PIPE, stdin=PIPE, stderr=STDOUT)
     return(p.communicate(input = bytes(md, encoding = "utf-8"))[0])
 

@@ -1,5 +1,6 @@
 setlocal wrap linebreak textwidth=79
 setlocal nocursorline nolist
+setlocal spell spelllang=en_us
 
 vmap j gj
 vmap k gk
