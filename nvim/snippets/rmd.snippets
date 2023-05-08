@@ -3,7 +3,7 @@ snippet --- "Rmd frontmatter"
 title:
 author:
 - "[Tarak Shah](https://hrdag.org/people/tarak-shah/)"
-date: `date +"%d %B, %Y"`
+date: "\`r format(Sys.time(), '%d %B, %Y %H:%M %Z')\`"
 output: html_document
 ---
 endsnippet
@@ -13,7 +13,13 @@ snippet frontmatter "Rmd frontmatter"
 title:
 author:
 - "[Tarak Shah](https://hrdag.org/people/tarak-shah/)"
-date: `date +"%d %B, %Y"`
+date: "\`r format(Sys.time(), '%d %B, %Y %H:%M %Z')\`"
 output: html_document
 ---
+endsnippet
+
+snippet setup "setup chunk"
+\`\`\`{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+\`\`\`
 endsnippet
