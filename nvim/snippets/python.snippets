@@ -10,11 +10,19 @@ endsnippet
 snippet args
 def getargs():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--$1", default="$2")
+    parser.add_argument('--$1', default='$2')
     return parser.parse_args()
 endsnippet
 
 snippet readfile "reads `fname` all at once and closes the connection"
 with open($1, 'r') as f_handle:
 	mydata = read(f_handle)
+endsnippet
+
+snippet git_root
+def git_root():
+    top = subprocess.Popen(['git', 'rev-parse', '--show-toplevel'],
+                           stdout = subprocess.PIPE,
+                           stderr = subprocess.PIPE)
+    return top.communicate()[0].decode('utf-8').strip()
 endsnippet
