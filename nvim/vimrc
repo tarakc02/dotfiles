@@ -29,11 +29,7 @@ let &t_EI.="\e[1 q"
 
 "{{{ plugins
 set pyxversion=3
-"let $VIRTUAL_ENV = '/usr/local/Caskroom/miniconda/base/envs/pynvim'
-let g:python3_host_prog='/opt/anaconda3/envs/pynvim/bin/python'
-"let g:node_host_prog='/opt/anaconda3/envs/pynvim/bin/node'
-let g:coc_node_path = '/opt/anaconda3/envs/pynvim/bin/node'
-
+"let g:coc_node_path = '~/micromamba/envs/coc-node/bin/node'
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'tpope/vim-surround'
@@ -46,6 +42,7 @@ Plug 'honza/vim-snippets'
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'Yavor-Ivanov/airline-monokai-subtle.vim'
+Plug 'sainnhe/everforest'
 
 Plug 'junegunn/fzf', { 'dir': '~/git/fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -113,7 +110,8 @@ tnoremap <Esc> <C-\><C-n>
 
 "{{{ cmd line apps (built in terminal)
 let cmdline_app           = {}
-let cmdline_app['julia']   = 'julia --threads=auto --project=.'
+let cmdline_app['julia']   = 'julia --threads=auto --project=@. -O3'
+let cmdline_app['python'] = '"bpython" || "python"'
 let cmdline_app['r']   = 'R'
 "}}}
 
@@ -174,7 +172,7 @@ let g:airline_section_b = '%-0.40{getcwd()}'
 let g:airline_section_c = "%f"
 
 "show buffers
-let g:airline_theme = 'gruvbox'
+let g:airline_theme = 'everforest'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'default'
 let g:airline#extensions#tabline#buffer_nr_show=1
@@ -184,7 +182,7 @@ let g:monokai_gui_italic = 1
 let g:monochrome_italic_comments = 1
 let g:gruvbox_italic = 1
 let g:gruvbox_invert_tabline=1
-colorscheme gruvbox
+colorscheme everforest
 
 "let g:terminal_color_0  = '#2d2e27' "black
 "let g:terminal_color_1  = '#f92772' "pink
