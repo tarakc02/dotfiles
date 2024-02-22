@@ -55,7 +55,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 Plug 'jalvesaq/vimcmdline'
 Plug 'jalvesaq/Nvim-R'
-Plug 'JuliaEditorSupport/julia-vim'
+""Plug 'JuliaEditorSupport/julia-vim'
 
 Plug 'junegunn/goyo.vim'
 
@@ -114,8 +114,9 @@ tnoremap <Esc> <C-\><C-n>
 
 "{{{ cmd line apps (built in terminal)
 let cmdline_app           = {}
-let cmdline_app['julia']   = 'julia --threads=auto --project -O3'
+let cmdline_app['julia']   = 'julia --threads=auto --project=@. -O3'
 let cmdline_app['python'] = '"bpython" || "python"'
+"let cmdline_app['python'] = "python"
 let cmdline_app['r']   = 'R'
 "}}}
 

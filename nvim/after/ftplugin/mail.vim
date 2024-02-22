@@ -1,6 +1,7 @@
 setlocal wrap linebreak
 setlocal nocursorline nolist
 setlocal spell spelllang=en_us
+setlocal colorcolumn=72
 
 vmap j gj
 vmap k gk
