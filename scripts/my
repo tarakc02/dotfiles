@@ -135,10 +135,10 @@ open-weekly() {
     if [ -z "${TMUX-}" ]; then
         nvim '+Goyo' '+cd $HOME/git/weeklies' "$fname"
     elif [ "$COLUMNS" -gt 165 ]; then
-        tmux split-window -p 50 -h \
+        tmux split-window -l 50% -h \
             nvim '+Goyo' '+cd $HOME/git/weeklies' "$fname"
     else
-        tmux split-window -p 50 -v \
+        tmux split-window -l 50% -v \
             nvim '+Goyo' '+cd $HOME/git/weeklies' "$fname"
     fi
 }

@@ -14,9 +14,9 @@ TMPFILE="$DIR/preview"
 if [ -z "$TMUX" ]; then
   nvim -R '+set filetype=mail' '+set nofoldenable' '+set nomodifiable' '+Goyo' "$TMPFILE"
 elif [ "$COLUMNS" -gt 180 ]; then
-  tmux split-window -p 50 -h \
+  tmux split-window -l 50% -h \
     nvim -R '+set filetype=mail' '+set nofoldenable' '+set nomodifiable' '+Goyo' "$TMPFILE"
 else
-  tmux split-window -p 50 -v \
+  tmux split-window -l 50% -v \
     nvim -R '+set filetype=mail' '+set nofoldenable' '+set nomodifiable' '+Goyo' "$TMPFILE"
 fi

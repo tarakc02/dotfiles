@@ -7,10 +7,10 @@ COLUMNS=${COLUMNS:-`tput cols`}
 if [ -z "$TMUX" ]; then
   nvim '+set filetype=mail' '+set syntax=markdown' '+set nofoldenable' '+Goyo' "$1"
 elif [ "$COLUMNS" -gt 180 ]; then
-    tmux split-window -p 50 -h \
+    tmux split-window -l 50% -h \
         neomutt -F '~/.mutt/editor.muttrc' '-H' "$1"
 else
-    tmux split-window -p 50 -v \
+    tmux split-window -l 50% -v \
         neomutt -F '~/.mutt/editor.muttrc' '-H' "$1"
 fi
 
