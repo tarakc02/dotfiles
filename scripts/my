@@ -32,6 +32,7 @@ Usage: $our_name action [args]
       reply: compose reply to an email
       sample: sample a random file from a collection defined by location and pattern
       symlink-audit: audit a directory tree for broken symlinks
+      pg-services: list defined postgres services
 
   NOTE: to see what an action would do, use -d option to simulate the action.
   NOTE: this was copied from aer-tools, see it for more sample code
@@ -224,6 +225,10 @@ lookup() {
     grep "$1" "$fname"
 }
 
+pg-services() {
+    grep -E '\[.+\]' ~/.pg_service.conf 
+}
+
 # I used this to find every time I used `pdf_text`
 #find . -type f -iname "*.R" -exec grep -r -n -H -C2 --color=always "pdf_text" {} +;
 
@@ -291,6 +296,9 @@ case $action in
         ;;
     ( lookup )
         lookup "$@"
+        ;;
+    ( pg-services )
+        pg-services
         ;;
     ( * )
         abort "'$action' is not a recognized action, run: $_our_name -h"

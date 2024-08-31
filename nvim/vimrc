@@ -56,6 +56,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'jalvesaq/vimcmdline'
 Plug 'jalvesaq/Nvim-R'
 ""Plug 'JuliaEditorSupport/julia-vim'
+Plug 'tpope/vim-dadbod'
+Plug 'kristijanhusak/vim-dadbod-ui'
 
 Plug 'junegunn/goyo.vim'
 
@@ -236,7 +238,7 @@ let R_nvim_wd = 1
 "}}}
 
 " julia{{{
-let g:default_julia_version = '1.7.2'
+let g:default_julia_version = '1.10'
 "}}}
 
 " goyo{{{
@@ -289,6 +291,9 @@ function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
+
+nmap <silent> <LocalLeader>d <Plug>(coc-definition)
+nmap <silent> <LocalLeader>r <Plug>(coc-references)
 
 " Insert <tab> when previous text is space, refresh completion if not.
 inoremap <silent><expr> <TAB>

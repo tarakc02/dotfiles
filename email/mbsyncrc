@@ -8,7 +8,8 @@ IMAPAccount hrdag
 Host imap.fastmail.com
 User tarak_hrvd_org@fastmail.fm
 PassCmd "gpg --quiet --for-your-eyes-only --no-tty -d ~/.mutt/passwords/fastmail.gpg"
-SSLType IMAPS
+#SSLType IMAPS
+TLSType IMAPS
 AuthMechs LOGIN
 
 # Remote storage

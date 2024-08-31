@@ -4,6 +4,7 @@ application/vnd.ms-excel; ~/.mutt/scripts/view_attachment.sh %s "-"
 application/vnd.openxmlformats-officedocument.presentationml.presentation; ~/.mutt/scripts/view_attachment.sh %s "-"
 application/vnd.oasis.opendocument.text; ~/.mutt/scripts/view_attachment.sh %s "-"
 application/vnd.openxmlformats-officedocument.wordprocessingml.document; ~/.mutt/scripts/view_attachment.sh %s "-"
+application/vnd.openxmlformats-officedocument.spreadsheetml.sheet; ~/.mutt/scripts/view_attachment.sh %s "-"
 
 
 # Images

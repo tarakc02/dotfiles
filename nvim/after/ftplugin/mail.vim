@@ -22,3 +22,6 @@ inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
 
 command! Preview :% !my preview-mail
 command! WeeklyList :read !notmuch address --output=recipients from:tarak date:last_week subject:"TS week of" | sed 's/$/,/g'
+
+set dictionary=/usr/share/dict/words
+

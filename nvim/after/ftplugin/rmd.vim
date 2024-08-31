@@ -13,3 +13,6 @@ nmap ^ g^
 nmap 0 g0
 
 command! Preview :% !my preview-rmd
+
+set dictionary=/usr/share/dict/words
+

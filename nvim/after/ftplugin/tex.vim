@@ -11,3 +11,6 @@ nmap k gk
 nmap $ g$
 nmap ^ g^
 nmap 0 g0
+
+set dictionary=/usr/share/dict/words
+

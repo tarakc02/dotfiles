@@ -100,7 +100,7 @@ folder-hook . 'push <collapse-all>'
 
 set nm_query_type = threads
 
-virtual-mailboxes "INBOX"                  "notmuch://?query=folder:hrdag/inbox"
+virtual-mailboxes "INBOX"                  "notmuch://?query=folder:hrdag/inbox date:2_months_ago..today"
 virtual-mailboxes "  recent"               "notmuch://?query=folder:hrdag/inbox date:2_weeks_ago..today"
 virtual-mailboxes "  this-week"            "notmuch://?query=date:this_week folder:hrdag/inbox"
 virtual-mailboxes "  this-month"           "notmuch://?query=date:this_month folder:hrdag/inbox"
