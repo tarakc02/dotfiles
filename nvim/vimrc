@@ -120,6 +120,8 @@ let cmdline_app['julia']   = 'julia --threads=auto --project=@. -O3'
 let cmdline_app['python'] = '"bpython" || "python"'
 "let cmdline_app['python'] = "python"
 let cmdline_app['r']   = 'R'
+
+let g:db_ui_execute_on_save = 0
 "}}}
 
 " {{{ completion etc
