@@ -15,6 +15,7 @@ export EDITOR="nvim"
 export VISUAL="nvim"
 export HRDAG_GIT_HOME=~/git
 export DVC_NO_ANALYTICS="true"
+export CLEAN_OUTPUT_DIR="/var/tmp/tarak/.clean-scraper"
 
 # note: on newer macs, if you use bash you get a message about the default
 # shell being zsh
