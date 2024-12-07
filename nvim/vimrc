@@ -2,6 +2,9 @@
 set nocompatible
 set hidden
 
+" load project-specific vimrc, see :h exrc or https://andrew.stwrt.ca/posts/project-specific-vimrc/
+set exrc
+
 set cursorline
 set termguicolors
 syntax enable
