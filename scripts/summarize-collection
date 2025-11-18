@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 nfiles=$(find -L $1 -type f | wc -l)
-npdfs=$(find -L $1 -iname *.pdf | wc -l)
-npages=$(find -L $1 -iname *.pdf -print0 | xargs -0 -P0 -I{} pdfinfo "{}" 2> /dev/null | awk '/^Pages:/ {print $2}' |  paste -sd+ | bc)
+npdfs=$(find -L $1 -type f -iname *.pdf | wc -l)
+npages=$(find -L $1 -type f -iname *.pdf -print0 | xargs -0 -P0 -I{} pdfinfo "{}" 2> /dev/null | awk '/^Pages:/ {print $2}' |  paste -sd+ | bc)
 filesize=$(du -hs $1 | cut -f1)
 
 echo "{\"files\": $nfiles, \"pdfs\": $npdfs, \"pdf_pages\": $npages, \"size\": \"$filesize\"}"

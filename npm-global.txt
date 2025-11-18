@@ -1,0 +1,5 @@
+/usr/lib
+├── corepack@0.25.2
+├── neovim@5.3.0
+└── npm@10.5.0
+

@@ -56,12 +56,17 @@ Plug 'junegunn/fzf.vim'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'github/copilot.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'CopilotC-Nvim/CopilotChat.nvim'
 
 Plug 'jalvesaq/vimcmdline'
-Plug 'jalvesaq/Nvim-R'
+""Plug 'jalvesaq/Nvim-R'
+Plug 'R-nvim/R.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch': 'main'}
 ""Plug 'JuliaEditorSupport/julia-vim'
 Plug 'tpope/vim-dadbod'
 Plug 'kristijanhusak/vim-dadbod-ui'
+Plug 'lervag/vimtex'
 
 Plug 'junegunn/goyo.vim'
 
@@ -121,7 +126,7 @@ tnoremap <Esc> <C-\><C-n>
 "{{{ cmd line apps (built in terminal)
 let cmdline_app           = {}
 let cmdline_app['julia']   = 'julia --threads=auto --project=@. -O3'
-let cmdline_app['python'] = '"bpython" || "python"'
+let cmdline_app['python'] = "PYTHON_BASIC_REPL=1 uv run python"
 "let cmdline_app['python'] = "python"
 let cmdline_app['r']   = 'R'
 
@@ -309,6 +314,18 @@ inoremap <silent><expr> <TAB>
 inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 inoremap <silent><expr><c-l> coc#refresh()
+" }}}
+
+" copilot {{{
+lua << EOF
+local select = require("CopilotChat.select")
+require("CopilotChat").setup {
+  selection = function(source)
+    return select.visual(source) or select.buffer(source)
+  end,
+  model = "claude-sonnet-4.5"
+}
+EOF
 " }}}
 
 "use git grep
