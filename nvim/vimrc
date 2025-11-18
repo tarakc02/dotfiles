@@ -59,7 +59,7 @@ Plug 'github/copilot.vim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'CopilotC-Nvim/CopilotChat.nvim'
 
-Plug 'jalvesaq/vimcmdline'
+Plug 'jalvesaq/hlterm'
 ""Plug 'jalvesaq/Nvim-R'
 Plug 'R-nvim/R.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'branch': 'main'}
@@ -124,12 +124,24 @@ tnoremap <Esc> <C-\><C-n>
 "}}}
 
 "{{{ cmd line apps (built in terminal)
-let cmdline_app           = {}
-let cmdline_app['julia']   = 'julia --threads=auto --project=@. -O3'
-let cmdline_app['python'] = "PYTHON_BASIC_REPL=1 uv run python"
-"let cmdline_app['python'] = "python"
-let cmdline_app['r']   = 'R'
-
+lua << EOF
+require('hlterm').setup({
+  app = {
+    r = 'R',
+    python = 'uv run python',
+    julia = 'julia --threads=auto --project=@. -O3',
+  },
+  mappings = {
+    start = '<LocalLeader>s',
+    send = '<Space>',
+  },
+})
+EOF
+"let cmdline_app           = {}
+"let cmdline_app['julia']   = 'julia --threads=auto --project=@. -O3'
+"let cmdline_app['python'] = "PYTHON_BASIC_REPL=1 uv run python"
+""let cmdline_app['python'] = "python"
+"let cmdline_app['r']   = 'R'
 let g:db_ui_execute_on_save = 0
 "}}}
 
