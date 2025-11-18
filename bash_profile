@@ -16,13 +16,17 @@ fi
 #source "$fasd_cache"
 #unset fasd_cache
 
+export LANGUAGE="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
+export LANG="en_US.UTF-8"
+export LC_TYPE="en_US.UTF-8"
 export EDITOR="nvim"
 export VISUAL="nvim"
 export HRDAG_GIT_HOME=~/git
 export DVC_NO_ANALYTICS="true"
 export CLEAN_OUTPUT_DIR="/var/tmp/tarak/.clean-scraper"
 export CLEAN_ETL_DIR="/var/tmp/tarak/.clean-scraper"
+export TERM="screen-256color"
 
 # note: on newer macs, if you use bash you get a message about the default
 # shell being zsh

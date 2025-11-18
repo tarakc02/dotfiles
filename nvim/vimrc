@@ -329,6 +329,7 @@ EOF
 " }}}
 
 "use git grep
-set grepprg=git\ grep\ --break\ -n\ -r\ $*\ --\ :/
+""set grepprg=git\ grep\ --break\ -n\ -r\ $*\ --\ :/
+set grepprg=rg\ --vimgrep\ --smart-case
 
 " vim: set fdm=marker fmr={{{,}}} fdl=0 foldcolumn=4:
