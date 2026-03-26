@@ -35,6 +35,7 @@ let &t_EI.="\e[1 q"
 "let $VIRTUAL_ENV = '/usr/local/Caskroom/miniconda/base/envs/pynvim'
 "let g:python3_host_prog='/usr/local/Caskroom/miniconda/base/envs/pynvim/bin/python'
 "let g:python3_host_prog='uv run python'
+let g:python3_host_prog='/home/tarak/bin/uv-python'
 "let g:python_host_prog='/usr/local/Caskroom/miniconda/base/envs/pynvim2/bin/python'
 
 call plug#begin('~/.local/share/nvim/plugged')
@@ -335,8 +336,7 @@ local select = require("CopilotChat.select")
 require("CopilotChat").setup {
   selection = function(source)
     return select.visual(source) or select.buffer(source)
-  end,
-  model = "claude-sonnet-4.5"
+  end
 }
 EOF
 " }}}
