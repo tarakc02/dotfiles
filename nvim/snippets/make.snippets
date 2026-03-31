@@ -1,41 +1,36 @@
-priority 1
-snippet vimline "vimline"
-# vim: set ts=8 sts=0 sw=8 si fenc=utf-8 noet:
-# vim: set fdm=marker fmr={{{,}}} fdl=0 foldcolumn=4:
-endsnippet
+# priority 1
+snippet vimline vimline
+	# vim: set ts=8 sts=0 sw=8 si fenc=utf-8 noet:
+	# vim: set fdm=marker fmr={{{,}}} fdl=0 foldcolumn=4:
 
-snippet maketask "basic makefile"
-input := $1
-output := output/$2
-src := src/$3
+snippet maketask basic makefile
+	input := $1
+	output := output/$2
+	src := src/$3
 
-.PHONY: all clean
+	.PHONY: all clean
 
-all: $(output)
+	all: $(output)
 
-clean: 
-	-rm -r output/*
+	clean:
+		-rm -r output/*
 
-$(output): $(src) $(input)
-	$4
-endsnippet
+	$(output): $(src) $(input)
+		$4
 
-snippet proot "proj root for consistent project context"
-proot := $(shell git rev-parse --show-toplevel)
-endsnippet
+snippet proot proj root for consistent project context
+	proot := $(shell git rev-parse --show-toplevel)
 
-snippet render-rmd "render rmarkdown file"
-output/$1: \
-		src/$2.Rmd
-	Rscript -e "rmarkdown::render('$<')"
-	mv src/$1 $@
-	-rm src/$2.md
-	-rm src/$2.tex
-	-rm src/$1
-endsnippet
+snippet render-rmd render rmarkdown file
+	output/$1: \
+			src/$2.Rmd
+		Rscript -e "rmarkdown::render('$<')"
+		mv src/$1 $@
+		-rm src/$2.md
+		-rm src/$2.tex
+		-rm src/$1
 
-snippet render-md "render markdown to html"
-output/$1.html: \
-		src/$1.md
-	pandoc -f markdown -t html $< -o $@
-endsnippet
+snippet render-md render markdown to html
+	output/$1.html: \
+			src/$1.md
+		pandoc -f markdown -t html $< -o $@

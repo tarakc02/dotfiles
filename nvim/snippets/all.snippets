@@ -1,30 +1,14 @@
-priority 0
-snippet vimline "vimline"
-# vim: set ts=4 sts=0 sw=4 si fenc=utf-8 et:
-# vim: set fdm=marker fmr={{{,}}} fdl=0 foldcolumn=4:
-endsnippet
+# priority 0
+snippet vimline vimline
+	# vim: set ts=4 sts=0 sw=4 si fenc=utf-8 et:
+	# vim: set fdm=marker fmr={{{,}}} fdl=0 foldcolumn=4:
+
+snippet hdr file-header
+	# Authors:     TS
+	# Maintainers: TS
+	# Copyright:   YYYY, HRDAG, GPL v2 or later
+	# =========================================
 
 
-snippet hdr "file-header"
-# Authors:     TS
-# Maintainers: TS
-# Copyright:   `date +"%Y"`, HRDAG, GPL v2 or later
-# =========================================
-
-endsnippet
-
-snippet curpath "full current path, relative to git root"
-`!p
-import subprocess
-toplevel = subprocess.Popen(['git', 'rev-parse', '--show-toplevel'],
-stdout = subprocess.PIPE,
-stderr = subprocess.PIPE)
-
-toplevel = toplevel.communicate()[0].rstrip().decode('utf-8')
-projroot = os.path.basename(toplevel)
-
-fullpath = os.path.abspath(path)
-snip.rv = re.sub(toplevel, projroot, fullpath)
-`
-
-endsnippet
+snippet curpath full current path, relative to git root
+	${1:project/path/to/file}

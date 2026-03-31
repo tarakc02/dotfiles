@@ -1,14 +1,11 @@
-snippet block-comment "block comment"
-#=
+snippet block-comment block comment
+	#=
 
-$1
+	$1
 
-=#
-endsnippet
+	=#
 
-
-snippet args "command line arguments"
-Base.@kwdef struct Args
-	input::String = ""
-end
-endsnippet
+snippet args command line arguments
+	Base.@kwdef struct Args
+		input::String = ""
+	end

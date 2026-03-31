@@ -1,41 +1,34 @@
 snippet shebang
-#!/usr/bin/env python3
-endsnippet
+	#!/usr/bin/env python3
 
 snippet main
-if __name__ == '__main__':
-	$1
-endsnippet
+	if __name__ == '__main__':
+		$1
 
 snippet args
-def getargs():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--$1', default='$2')
-    return parser.parse_args()
-endsnippet
+	def getargs():
+	    parser = argparse.ArgumentParser()
+	    parser.add_argument('--$1', default='$2')
+	    return parser.parse_args()
 
-snippet imports "common imports"
-import argparse
-import logging
-import pandas as pd
-from sys import stdout
-endsnippet
+snippet imports common imports
+	import argparse
+	import logging
+	import pandas as pd
+	from sys import stdout
 
-snippet readfile "reads `fname` all at once and closes the connection"
-with open($1, 'r') as f_handle:
-	mydata = read(f_handle)
-endsnippet
+snippet readfile reads fname all at once and closes the connection
+	with open($1, 'r') as f_handle:
+		mydata = read(f_handle)
 
 snippet git_root
-def git_root():
-    top = subprocess.Popen(['git', 'rev-parse', '--show-toplevel'],
-                           stdout = subprocess.PIPE,
-                           stderr = subprocess.PIPE)
-    return top.communicate()[0].decode('utf-8').strip()
-endsnippet
+	def git_root():
+	    top = subprocess.Popen(['git', 'rev-parse', '--show-toplevel'],
+	                           stdout = subprocess.PIPE,
+	                           stderr = subprocess.PIPE)
+	    return top.communicate()[0].decode('utf-8').strip()
 
 snippet logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-endsnippet
+	logging.basicConfig(level=logging.INFO)
+	logger = logging.getLogger(__name__)
+	logger.setLevel(logging.INFO)

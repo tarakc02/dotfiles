@@ -1,22 +1,19 @@
-snippet test_that "testthat unit test"
-test_that($1, {
-	$2
-})
-endsnippet
+snippet test_that testthat unit test
+	test_that($1, {
+		$2
+	})
 
-snippet args "task argument parsing"
-# args {{{
-parser <- ArgumentParser()
-parser$add_argument($1, default = $2)
-args <- parser$parse_args()
-# }}}
-endsnippet
+snippet args task argument parsing
+	# args {{{
+	parser <- ArgumentParser()
+	parser$add_argument($1, default = $2)
+	args <- parser$parse_args()
+	# }}}
 
-snippet pacman "install/load script dependencies"
-# load libs {{{
-pacman::p_load(
-	argparse,
-	$0
-)
-# }}}
-endsnippet
+snippet pacman install/load script dependencies
+	# load libs {{{
+	pacman::p_load(
+		argparse,
+		$0
+	)
+	# }}}

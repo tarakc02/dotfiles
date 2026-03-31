@@ -1,25 +1,22 @@
-snippet --- "Rmd frontmatter"
----
-title:
-author:
-- "[Tarak Shah](https://hrdag.org/people/tarak-shah/)"
-date: "\`r format(Sys.time(), '%d %B, %Y %H:%M %Z')\`"
-output: html_document
----
-endsnippet
+snippet --- Rmd frontmatter
+	---
+	title:
+	author:
+	- "[Tarak Shah](https://hrdag.org/people/tarak-shah/)"
+	date: "\`r format(Sys.time(), '%d %B, %Y %H:%M %Z')\`"
+	output: html_document
+	---
 
-snippet frontmatter "Rmd frontmatter"
----
-title:
-author:
-- "[Tarak Shah](https://hrdag.org/people/tarak-shah/)"
-date: "\`r format(Sys.time(), '%d %B, %Y %H:%M %Z')\`"
-output: html_document
----
-endsnippet
+snippet frontmatter Rmd frontmatter
+	---
+	title:
+	author:
+	- "[Tarak Shah](https://hrdag.org/people/tarak-shah/)"
+	date: "\`r format(Sys.time(), '%d %B, %Y %H:%M %Z')\`"
+	output: html_document
+	---
 
-snippet setup "setup chunk"
-\`\`\`{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-\`\`\`
-endsnippet
+snippet setup setup chunk
+	\`\`\`{r setup, include=FALSE}
+	knitr::opts_chunk$set(echo = TRUE)
+	\`\`\`
