@@ -13,7 +13,7 @@ This is a personal dotfiles repository containing shell configurations, neovim s
 - `tmux/` - Tmux configuration with machine-specific overrides
 - `email/` - Neomutt email setup using mbsync, notmuch, and msmtp (macOS only)
 - `scripts/` - Utility scripts including the `my` multi-tool
-- `claude/skills/` - Claude Code skills for MCP server building and skill creation
+- `claude/skills/` - Claude Code skills (MCP server building, skill creation, adhoc labeling interfaces, legal/literature research, HRDAG workflow)
 
 ## Key Configuration Details
 
