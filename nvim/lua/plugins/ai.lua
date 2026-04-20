@@ -16,9 +16,9 @@ return {
     opts = {
       strategies = {
         -- Uses Claude Max subscription via ACP (no API key needed)
-        chat = { adapter = "claude_code" },
-        inline = { adapter = "claude_code" },
-        cmd = { adapter = "claude_code" },
+        chat = { adapter = "copilot" },
+        inline = { adapter = "copilot" },
+        cmd = { adapter = "copilot" },
       },
       adapters = {
         -- Claude via Claude Code ACP (uses your Max subscription)
@@ -33,11 +33,15 @@ return {
             },
           })
         end,
-        -- Local models via Ollama
-        ollama = function()
-          return require("codecompanion.adapters").extend("ollama", {
+        -- Local models via the kj OpenAI-compatible endpoint
+        kj = function()
+          return require("codecompanion.adapters").extend("openai_compatible", {
+            env = {
+              url = "http://kj/llm/v1",
+              api_key = "KJ_API_KEY",
+            },
             schema = {
-              model = { default = "llama3.2" },
+              model = { default = "qwen3-coder-next" },
             },
           })
         end,
