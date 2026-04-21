@@ -1,0 +1,161 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "kj/qwen3-coder-next",
+  "share": "disabled",
+  "autoupdate": true,
+  "provider": {
+    "kj": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "KJ Local",
+      "options": {
+        "baseURL": "http://kj/llm/v1",
+        "apiKey": "{env:KJ_API_KEY}"
+      },
+      "models": {
+        "qwen3-coder-next": {
+          "name": "Qwen3 Coder Next"
+        },
+        "qwen3.5-27b": {
+          "name": "Qwen3.5 27B"
+        },
+        "gemma4-31b-it": {
+          "name": "Gemma 4 31B IT"
+        }
+      }
+    }
+  },
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "model": "kj/qwen3-coder-next",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    },
+    "plan": {
+      "mode": "primary",
+      "model": "kj/qwen3-coder-next",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false
+      }
+    },
+    "review_report_gemma": {
+      "mode": "primary",
+      "model": "kj/gemma4-31b-it",
+      "prompt": "Give an expert review of this statistical report, focusing on accuracy, clarity, and insights.",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false
+      }
+    },
+    "review_report_qwen": {
+      "mode": "primary",
+      "model": "kj/qwen3.5-27b",
+      "prompt": "Give an expert review of this statistical report, focusing on accuracy, clarity, and insights.",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false
+      }
+    },
+    "plan_reviewer": {
+      "description": "Reviews the plan for completeness and feasibility",
+      "mode": "subagent",
+      "model": "kj/qwen3.5-27b",
+      "prompt": "You are a plan reviewer. Focus on completeness, feasibility, and potential risks.",
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false
+      }
+    },
+    "code-reviewer": {
+      "description": "Reviews code for best practices and potential issues",
+      "mode": "subagent",
+      "model": "kj/gemma4-31b-it",
+      "prompt": "You are a code reviewer. Focus on security, performance, and maintainability.",
+      "tools": {
+        "write": false,
+        "edit": false
+      }
+    },
+    "stats-analyst": {
+      "description": "Expert Statistical Analyst & Data Scientist. Provides rigorous statistical guidance, performs accurate data analysis, and implements reproducible analytical pipelines using R (tidyverse, ggplot2) and Python (pandas, seaborn, scipy). Focuses on statistical validity, methodological rigor, and reproducibility.",
+      "mode": "primary",
+      "model": "kj/qwen3.5-27b",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    },
+    "academic-researcher": {
+      "description": "Expert research assistant conducting comprehensive literature reviews, systematic database searches, source evaluation, and synthesis of academic findings. Specializes in criminology, statistics, ML/AI/NLP, public health, demography, human rights, and international law. Uses sub-agents for parallel paper processing and extraction.",
+      "mode": "primary",
+      "model": "kj/qwen3.5-27b",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "webfetch": true
+      }
+    },
+    "legal-analyst": {
+      "description": "Expert legal research assistant specializing in California criminal law, including the Racial Justice Act (Penal Code 745), police transparency laws (SB-1421, SB-16, SB-2, POBR), discovery (Pitchess, Brady, RJA discovery), standing for injunctive relief, and 4th Amendment surveillance law. Conducts case law research, traces doctrinal development, and evaluates precedential value.",
+      "mode": "primary",
+      "model": "kj/qwen3.5-27b",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "webfetch": true
+      }
+    },
+    "hrdag-orchestrator": {
+      "description": "HRDAG-style data pipeline orchestrator. Organizes data processing work into discrete tasks with standard directories (src/, input/, output/) and Makefile-based orchestration. Ensures reproducibility, proper data lineage tracking via relative paths, and adherence to HRDAG pipeline conventions (import -> clean -> transform -> export).",
+      "mode": "primary",
+      "model": "kj/qwen3.5-27b",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    },
+    "labeling-designer": {
+      "description": "Expert in designing and building adhoc, ephemeral labeling/annotation interfaces for ML classification and extraction tasks. Specializes in text-UI (curses) interfaces, spreadsheet-based labeling, and minimal web interfaces. Implements keyboard-only hot paths, SQLite state persistence, and active learning with uncertainty sampling. Uses LLM pre-labeling for efficiency.",
+      "mode": "primary",
+      "model": "kj/qwen3.5-27b",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    },
+    "mcp-developer": {
+      "description": "Expert MCP (Model Context Protocol) server developer. Creates high-quality MCP servers in TypeScript or Python to enable LLMs to interact with external services. Focuses on comprehensive API coverage, clean tool naming, actionable error messages, and follows the four-phase workflow: Research & Planning, Implementation, Review & Testing, and Evaluation creation.",
+      "mode": "primary",
+      "model": "kj/qwen3.5-27b",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true,
+        "webfetch": true
+      }
+    },
+    "skill-creator": {
+      "description": "Expert skill creator for extending Claude/opencode capabilities. Specializes in creating modular, self-contained skill packages with YAML frontmatter metadata, SKILL.md instructions, and bundled resources (scripts/, references/, assets/). Follows progressive disclosure design principles to minimize context usage while maximizing effectiveness.",
+      "mode": "primary",
+      "model": "kj/qwen3.5-27b",
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    }
+  }
+}

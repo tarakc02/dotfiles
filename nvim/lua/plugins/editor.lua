@@ -24,24 +24,9 @@ return {
     },
   },
 
-  -- Keybinding help popup (toggle with :WhichKey to show, disabled auto-popup)
+  -- Keybinding help popup (disabled)
   {
     "folke/which-key.nvim",
-    event = "VeryLazy",
-    opts = {
-      icons = { mappings = false, keys = {} },
-      triggers = {
-        { "<leader>", mode = { "n", "v" } },
-        { "<LocalLeader>", mode = { "n", "v" } },
-      },
-      plugins = { spelling = { enabled = true } },
-    },
-    keys = {
-      {
-        "<leader>?",
-        function() require("which-key").show({ global = false }) end,
-        desc = "Buffer-local keymaps",
-      },
-    },
+    enabled = false,
   },
 }
