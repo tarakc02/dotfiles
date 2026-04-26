@@ -6,9 +6,9 @@ snippet vimline vimline
 snippet hdr file-header
 	# Authors:     TS
 	# Maintainers: TS
-	# Copyright:   YYYY, HRDAG, GPL v2 or later
+	# Copyright:   `strftime('%Y')`, HRDAG, GPL v2 or later
 	# =========================================
 
 
 snippet curpath full current path, relative to git root
-	${1:project/path/to/file}
+	`GitRelPath()`

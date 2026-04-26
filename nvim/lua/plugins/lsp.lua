@@ -126,6 +126,18 @@ return {
         paths = { vim.fn.stdpath("config") .. "/my-snippets" },
       })
 
+      -- Helper for snippets: path of current file relative to the git root,
+      -- prefixed with the project (toplevel basename).
+      vim.cmd([[
+        function! GitRelPath() abort
+          let l:top = trim(system('git -C ' . shellescape(expand('%:p:h')) . ' rev-parse --show-toplevel'))
+          if v:shell_error || empty(l:top)
+            return expand('%:p')
+          endif
+          return fnamemodify(l:top, ':t') . strpart(expand('%:p'), strlen(l:top))
+        endfunction
+      ]])
+
       -- Snippet navigation (preserving your C-j/C-k muscle memory)
       vim.keymap.set({ "i", "s" }, "<C-j>", function()
         if ls.expand_or_jumpable() then ls.expand_or_jump() end
