@@ -6,8 +6,8 @@ snippet test_that testthat unit test
 snippet args task argument parsing
 	# args {{{
 	parser <- ArgumentParser()
-	parser$add_argument($1, default = $2)
-	args <- parser$parse_args()
+	parser\$add_argument($1, default = $2)
+	args <- parser\$parse_args()
 	# }}}
 
 snippet pacman install/load script dependencies

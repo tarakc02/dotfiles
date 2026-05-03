@@ -115,8 +115,8 @@ return {
     opts = {
       strategies = {
         chat = { adapter = "opencode" },
-        inline = { adapter = "kj_gemma" },
-        cmd = { adapter = "kj_gemma" },
+        inline = { adapter = "kj_deepseek" },
+        cmd = { adapter = "kj_deepseek" },
       },
       adapters = {
         acp = {
@@ -148,6 +148,22 @@ return {
               },
               schema = {
                 model = { default = "gemma" },
+              },
+              handlers = {
+                form_messages = merge_system_messages,
+              },
+            })
+          end,
+          kj_deepseek = function()
+            return require("codecompanion.adapters").extend("openai_compatible", {
+              formatted_name = "kj-deepseek",
+              env = {
+                url = "http://kj/llm",
+                api_key = "KJ_API_KEY",
+                chat_url = "/v1/chat/completions",
+              },
+              schema = {
+                model = { default = "deepseek" },
               },
               handlers = {
                 form_messages = merge_system_messages,

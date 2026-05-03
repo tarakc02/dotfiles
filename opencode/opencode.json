@@ -18,13 +18,7 @@
         "apiKey": "{env:KJ_API_KEY}"
       },
       "models": {
-        "qwen3.6-27b": {
-          "name": "Qwen3.6 27B"
-        },
-        "gemma4-31b-it": {
-          "name": "Gemma 4 31B IT"
-        },
-        "qwen": {"name": "Qwen"},
+        "deepseek": { "name": "DeepSeek-V4-Flash" },
         "gemma": {"name": "Gemma"}
       }
     }
@@ -32,21 +26,23 @@
   "agent": {
     "plan": {
       "mode": "primary",
-      "model": "kj/gemma4-31b-it",
+      "model": "kj/deepseek",
       "options": {
-          "enable_thinking": true,
+          "thinking": true,
+          "reasoning_effort": "max"
       },
       "tools": {
-        "write": false,
+        "write": true,
         "edit": false,
-        "bash": false
+        "bash": true
       }
     },
     "build": {
       "mode": "primary",
-      "model": "kj/qwen3.6-27b",
+      "model": "kj/deepseek",
       "options": {
-          "enable_thinking": true,
+          "thinking": true,
+          "reasoning_effort": "max"
       },
       "tools": {
         "write": true,
@@ -66,16 +62,17 @@
         "bash": false
       }
     },
-    "qwen": {
+    "deepseek": {
       "mode": "primary",
-      "model": "kj/qwen",
+      "model": "kj/deepseek",
       "options": {
-          "enable_thinking": true,
+          "thinking": true,
+          "reasoning_effort": "max"
       },
       "tools": {
-        "write": false,
-        "edit": false,
-        "bash": false
+        "write": true,
+        "edit": true,
+        "bash": true
       }
     },
   }
