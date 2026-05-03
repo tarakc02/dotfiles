@@ -9,6 +9,12 @@ then
     micromamba activate base
 fi
 
+# if the file ~/.config/hrdag/api exists, it is a key-value file with the key API_KEY
+# create the env var KJ_API_KEY as the value associated with the key API_KEY
+if [ -f ~/.config/hrdag/api ]; then
+    export KJ_API_KEY=$(grep -E '^API_KEY=' ~/.config/hrdag/api | cut -d= -f2-)
+fi
+
 #fasd_cache="$HOME/.fasd-init-bash"
 #if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
 #  fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >| "$fasd_cache"

@@ -1,0 +1,79 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "kj/gemma4-31b-it",
+  "share": "disabled",
+  "autoupdate": true,
+  "permission": {
+      "external_directory": {
+          "/tmp/**": "allow"
+      },
+      "edit": "ask"
+  },
+  "provider": {
+    "kj": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "KJ Local",
+      "options": {
+        "baseURL": "http://kj/llm/v1",
+        "apiKey": "{env:KJ_API_KEY}"
+      },
+      "models": {
+        "deepseek": { "name": "DeepSeek-V4-Flash" },
+        "gemma": {"name": "Gemma"}
+      }
+    }
+  },
+  "agent": {
+    "plan": {
+      "mode": "primary",
+      "model": "kj/deepseek",
+      "options": {
+          "thinking": true,
+          "reasoning_effort": "max"
+      },
+      "tools": {
+        "write": true,
+        "edit": false,
+        "bash": true
+      }
+    },
+    "build": {
+      "mode": "primary",
+      "model": "kj/deepseek",
+      "options": {
+          "thinking": true,
+          "reasoning_effort": "max"
+      },
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    },
+    "gemma": {
+      "mode": "primary",
+      "model": "kj/gemma",
+      "options": {
+          "enable_thinking": true,
+      },
+      "tools": {
+        "write": false,
+        "edit": false,
+        "bash": false
+      }
+    },
+    "deepseek": {
+      "mode": "primary",
+      "model": "kj/deepseek",
+      "options": {
+          "thinking": true,
+          "reasoning_effort": "max"
+      },
+      "tools": {
+        "write": true,
+        "edit": true,
+        "bash": true
+      }
+    },
+  }
+}
