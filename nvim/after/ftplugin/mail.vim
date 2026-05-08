@@ -14,11 +14,18 @@ nmap $ g$
 nmap ^ g^
 nmap 0 g0
 
-inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
-            \ 'prefix': '^From:(.*)$',
-            \ 'source': 'notmuch address "*"',
-            \ 'options': '--multi --reverse --margin 15%,0',
-            \ 'reducer': { lines -> join(lines, ',')} }))
+inoremap <buffer><silent> <c-x><c-l> <cmd>lua require'fzf-lua'.fzf_exec("notmuch address '*'", {
+            \ prompt = "Address> ",
+            \ fzf_opts = { ["--multi"] = true, ["--reverse"] = true },
+            \ winopts = { height = 0.6, width = 0.7 },
+            \ complete = function(selected, _, line, col)
+            \   if not selected or #selected == 0 then return end
+            \   local text = table.concat(selected, ", ")
+            \   local before = line:sub(1, col)
+            \   local after = #line > col and line:sub(col + 1) or ""
+            \   return before .. text .. after, col + #text
+            \ end,
+            \ })<CR>
 
 command! Preview :% !my preview-mail
 command! WeeklyList :read !notmuch address --output=recipients from:tarak date:last_week subject:"TS week of" | sed 's/$/,/g'

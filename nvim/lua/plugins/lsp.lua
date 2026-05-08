@@ -23,6 +23,15 @@ return {
           map("n", "]d", vim.diagnostic.goto_next, "Next diagnostic")
         end,
       })
+
+      -- R: use the system R + languageserver package (not mason).
+      vim.lsp.config("r_language_server", {
+        cmd_env = {
+          -- Set R option so lintr always finds ~/.lintr
+          R_PROFILE_USER = vim.fn.expand("~/.Rprofile_lsp"),
+        },
+      })
+      vim.lsp.enable("r_language_server")
     end,
   },
 
@@ -40,21 +49,10 @@ return {
       ensure_installed = {
         "pyright",
         "lua_ls",
-        "r_language_server",
         "texlab",
         "bashls",
       },
       automatic_installation = true,
-      handlers = {
-        r_language_server = function()
-          require("lspconfig").r_language_server.setup({
-            cmd_env = {
-              -- Set R option so lintr always finds ~/.lintr
-              R_PROFILE_USER = vim.fn.expand("~/.Rprofile_lsp"),
-            },
-          })
-        end,
-      },
     },
   },
 
@@ -143,8 +141,15 @@ return {
         if ls.expand_or_jumpable() then ls.expand_or_jump() end
       end, { desc = "Snippet forward" })
       vim.keymap.set({ "i", "s" }, "<C-k>", function()
-        if ls.jumpable(-1) then ls.jump(-1) end
-      end, { desc = "Snippet backward" })
+        if ls.jumpable(-1) then
+          ls.jump(-1)
+        else
+          -- Fall through to vim's default <C-k> (digraph entry in insert mode)
+          vim.api.nvim_feedkeys(
+            vim.api.nvim_replace_termcodes("<C-k>", true, false, true),
+            "n", false)
+        end
+      end, { desc = "Snippet backward / digraph fallback" })
       vim.keymap.set({ "i", "s" }, "<C-s>", function()
         if ls.expandable() then ls.expand() end
       end, { desc = "Expand snippet" })

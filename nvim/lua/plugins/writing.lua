@@ -19,6 +19,9 @@ return {
             callback = function() vim.b.quitting = 1 end,
           })
           vim.cmd([[cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!]])
+          pcall(function() require("lualine").hide() end)
+          vim.o.showtabline = 0
+          vim.o.laststatus = 0
         end,
       })
 
@@ -26,6 +29,7 @@ return {
         pattern = "GoyoLeave",
         callback = function()
           vim.opt_local.eventignore = ""
+          pcall(function() require("lualine").hide({ unhide = true }) end)
           if vim.b.quitting == 1 then
             local bufs = vim.tbl_filter(
               function(b) return vim.fn.buflisted(b) == 1 end,
