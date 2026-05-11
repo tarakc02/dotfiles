@@ -57,9 +57,9 @@
           "enable_thinking": true,
       },
       "tools": {
-        "write": false,
-        "edit": false,
-        "bash": false
+        "write": true,
+        "edit": true,
+        "bash": true
       }
     },
     "deepseek": {
