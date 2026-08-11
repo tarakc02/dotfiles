@@ -12,7 +12,7 @@ opt.shell = "bash"
 
 -- Basic options
 opt.hidden = true
-opt.exrc = true
+--opt.exrc = true # this is a security risk not worth it dont do it
 opt.cursorline = true
 opt.termguicolors = true
 opt.signcolumn = "number"
