@@ -65,8 +65,16 @@ return {
       "rafamadriz/friendly-snippets",
     },
     opts = {
+      -- One key, one job. blink owns the LSP menu only:
+      --   <Tab>        ghost text (minuet, plugins/autocomplete.lua)
+      --   <C-j>/<C-k>  snippet jumps (LuaSnip, below)
+      --   <C-s>        snippet expand (LuaSnip, below)
+      -- so the default preset's claims on those three are dropped here.
       keymap = {
         preset = "default",
+        ["<Tab>"] = false, -- preset: snippet_forward -> ghost text instead
+        ["<S-Tab>"] = false, -- preset: snippet_backward
+        ["<C-k>"] = false, -- preset: show_signature -> LuaSnip jump back
         ["<C-n>"] = { "select_next", "fallback" },
         ["<C-p>"] = { "select_prev", "fallback" },
         ["<CR>"] = { "accept", "fallback" },
