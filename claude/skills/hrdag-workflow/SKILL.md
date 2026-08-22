@@ -108,8 +108,21 @@ Then add a Makefile defining how to run the task.
 
 ## Directory Navigation
 
-When exploring an HRDAG-style project:
+When exploring an HRDAG-style project or sub-project pipeline:
+
 1. Look at top-level Makefile to understand pipeline order
 2. Check `import/` to see where data originates
 3. Check `export/` to see final outputs
 4. Follow symlinks in `input/` directories to trace data lineage
+
+## Common task structures and organizational conventions
+
+Most projects involve multiple data sources. By convention, the `individual`
+top level directory contains sub-pipelines for each imported data source.
+
+`write` is used for tasks that compile results and produce reports and memos. A
+`write` task can live at the top level, as well as within task-specific
+pipelines.
+
+`share`
+
