@@ -114,48 +114,14 @@ return {
     },
     opts = {
       strategies = {
-        chat = { adapter = "opencode" },
+        chat = { adapter = "pi" },
         inline = { adapter = "kj_deepseek" },
         cmd = { adapter = "kj_deepseek" },
       },
       adapters = {
-        acp = {
-          -- Claude via Claude Code ACP (uses your Max subscription)
-          claude_code = function()
-            return require("codecompanion.adapters").extend("claude_code", {})
-          end,
-          opencode = function()
-              return require("codecompanion.adapters").extend("opencode", {})
-          end,
-        },
-        http = {
-          -- Claude via Copilot (uses Copilot subscription)
-          copilot = function()
-            return require("codecompanion.adapters").extend("copilot", {
-              schema = {
-                model = { default = "claude-sonnet-4-5-20250514" },
-              },
-            })
-          end,
-          -- Local models via the kj OpenAI-compatible endpoint
-          kj_gemma = function()
-            return require("codecompanion.adapters").extend("openai_compatible", {
-              formatted_name = "kj-gemma",
-              env = {
-                url = "http://kj/llm",
-                api_key = "KJ_API_KEY",
-                chat_url = "/v1/chat/completions",
-              },
-              schema = {
-                model = { default = "gemma" },
-              },
-              handlers = {
-                form_messages = merge_system_messages,
-              },
-            })
-          end,
-          kj_deepseek = function()
-            return require("codecompanion.adapters").extend("openai_compatible", {
+          http = {
+              kj_deepseek = function()
+                  return require("codecompanion.adapters").extend("openai_compatible", {
               formatted_name = "kj-deepseek",
               env = {
                 url = "http://kj/llm",
@@ -170,31 +136,36 @@ return {
               },
             })
           end,
-          kj_qwen = function()
-            return require("codecompanion.adapters").extend("openai_compatible", {
-              formatted_name = "kj-qwen",
-              env = {
-                url = "http://kj/llm",
-                api_key = "KJ_API_KEY",
-                chat_url = "/v1/chat/completions",
-              },
-              schema = {
-                model = { default = "qwen" },
-              },
-              handlers = {
-                form_messages = merge_system_messages,
-              },
-            })
-          end,
-          -- Direct Anthropic API (pay-per-token, if needed)
-          anthropic = function()
-            return require("codecompanion.adapters").extend("anthropic", {
-              schema = {
-                model = { default = "claude-sonnet-4-20250514" },
-              },
-            })
-          end,
-        },
+          },
+          acp = {
+              pi = function()
+                  local helpers = require("codecompanion.adapters.acp.helpers")
+                  return {
+                      name = "pi",
+                      formatted_name = "Pi (sandboxed)",
+                      type = "acp",
+                      roles = { llm = "assistant", user = "user" },
+                      opts = { verbose_output = true },
+                      commands = {
+                          default = { "/home/tarak/git/pi-config/bin/pi-acp-server.sh" },
+                      },
+                      defaults = { mcpServers = {}, timeout = 60000 },
+                      parameters = {
+                          protocolVersion = 1,
+                          clientCapabilities = { fs = { readTextFile = true, writeTextFile = true } },
+                          clientInfo = { name = "CodeCompanion.nvim", version = "1.0.0" },
+                      },
+                      handlers = {
+                          setup = function(self) return true end,
+                          auth = function(self) return true end, -- authMethods is empty
+                          form_messages = function(self, messages, capabilities)
+                              return helpers.form_messages(self, messages, capabilities)
+                          end,
+                          on_exit = function(self, code) end,
+                      },
+                  }
+              end,
+          },
       },
       display = {
         chat = {
@@ -350,24 +321,16 @@ Output rules:
     end,
   },
 
-  -- Copilot ghost-text completion
+  -- Copilot. Ghost text is off: minuet (plugins/autocomplete.lua) owns that
+  -- and the <Tab> key. This spec is kept only for :Copilot auth, which is what
+  -- mints the token the codecompanion `copilot` adapter above reads.
+  -- To switch ghost text back to Copilot: set suggestion.enabled = true and
+  -- keymap.accept = "<Tab>" here, and set enabled = false on the minuet spec.
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
-    event = "InsertEnter",
     opts = {
-      suggestion = {
-        enabled = true,
-        auto_trigger = true,
-        keymap = {
-          accept = "<Tab>",
-          accept_word = false,
-          accept_line = false,
-          next = "<C-n>",
-          prev = "<C-p>",
-          dismiss = false,
-        },
-      },
+      suggestion = { enabled = true },
       panel = { enabled = false },
       filetypes = {
         markdown = true,
