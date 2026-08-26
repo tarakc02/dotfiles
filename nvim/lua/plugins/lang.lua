@@ -30,7 +30,7 @@ return {
     config = function()
       require("hlterm").setup({
         app = {
-          python = "uv run python",
+          python = "uv run --with ipython ipython",
           julia = "julia --threads=auto --project=@. -O3",
         },
         mappings = {

@@ -146,6 +146,25 @@ return {
                       type = "acp",
                       roles = { llm = "assistant", user = "user" },
                       opts = { verbose_output = true },
+                      -- PI_CC_QUICKFIX tells pi (inside the sandbox) to load the
+                      -- cc-quickfix extension: the agent can push file:line
+                      -- references into this nvim's quickfix window via the
+                      -- `quickfix` tool (see nvim/lua/piquickfix.lua).
+                      -- The sandbox script strips unknown env vars at the
+                      -- bwrap boundary, so PI_SANDBOX_ENV extends its allowlist
+                      -- to carry PI_CC_QUICKFIX (+ optional CC_QF_FILE) and
+                      -- PI_ACP_PI_ARGS through.
+                      -- PI_ACP_PI_ARGS overrides the bridge's default
+                      -- "--mode rpc --no-session" so chat turns are recorded
+                      -- under <repo>/.sandbox-home/sessions/ (inspect with
+                      -- `node ~/git/pi-config/extensions/trace/trace-core.mjs`).
+                      -- Needed to diagnose stalls: codecompanion discards ACP
+                      -- stderr, so without a session file nothing survives.
+                      env = {
+                        PI_SANDBOX_ENV = "PI_CC_QUICKFIX:CC_QF_FILE:PI_ACP_PI_ARGS",
+                        PI_CC_QUICKFIX = "1",
+                        PI_ACP_PI_ARGS = "--mode rpc",
+                      },
                       commands = {
                           default = { "/home/tarak/git/pi-config/bin/pi-acp-server.sh" },
                       },
@@ -281,6 +300,29 @@ Output rules:
     },
     config = function(_, opts)
       require("codecompanion").setup(opts)
+
+      -- pi (the codecompanion chat agent) can push file:line references into
+      -- this nvim's quickfix window. While a chat is open, tail the JSONL
+      -- mailbox the pi `quickfix` tool writes and apply entries via setqflist().
+      local piquickfix = require("piquickfix")
+      piquickfix.setup()
+      local pqf_group = vim.api.nvim_create_augroup("CCPiQuickfix", { clear = true })
+      vim.api.nvim_create_autocmd("User", {
+        group = pqf_group,
+        pattern = "CodeCompanionChatOpened",
+        callback = function()
+          piquickfix.start(vim.fn.getcwd())
+        end,
+        desc = "piquickfix: start tailing the pi quickfix mailbox",
+      })
+      vim.api.nvim_create_autocmd("User", {
+        group = pqf_group,
+        pattern = "CodeCompanionChatClosed",
+        callback = function()
+          piquickfix.stop()
+        end,
+        desc = "piquickfix: stop tailing the pi quickfix mailbox",
+      })
 
       -- Run a codecompanion inline command with display.diff.enabled = false,
       -- restoring the flag once the response has been processed. The diff
