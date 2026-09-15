@@ -6,8 +6,9 @@
 return {
   {
     "milanglacier/minuet-ai.nvim",
-    -- This is the active ghost-text provider and owns <Tab>. Copilot's ghost
-    -- text is off in plugins/ai.lua; see there for how to swap them back.
+    -- Disabled: Copilot (plugins/ai.lua) is the active ghost-text provider
+    -- and owns <Tab>. Enable this (and disable Copilot's suggestion there)
+    -- once the vLLM server on :8923 is running again.
     enabled = false,
     dependencies = { "nvim-lua/plenary.nvim" },
     -- Load on FileType (NOT InsertEnter): minuet registers a FileType autocmd

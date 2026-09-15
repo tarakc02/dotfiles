@@ -66,7 +66,7 @@ return {
     },
     opts = {
       -- One key, one job. blink owns the LSP menu only:
-      --   <Tab>        ghost text (minuet, plugins/autocomplete.lua)
+      --   <Tab>        ghost text (copilot, plugins/ai.lua)
       --   <C-j>/<C-k>  snippet jumps (LuaSnip, below)
       --   <C-s>        snippet expand (LuaSnip, below)
       -- so the default preset's claims on those three are dropped here.

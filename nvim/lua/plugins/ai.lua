@@ -363,16 +363,22 @@ Output rules:
     end,
   },
 
-  -- Copilot. Ghost text is off: minuet (plugins/autocomplete.lua) owns that
-  -- and the <Tab> key. This spec is kept only for :Copilot auth, which is what
-  -- mints the token the codecompanion `copilot` adapter above reads.
-  -- To switch ghost text back to Copilot: set suggestion.enabled = true and
-  -- keymap.accept = "<Tab>" here, and set enabled = false on the minuet spec.
+  -- Copilot ghost text. This owns <Tab>: blink's snippet_forward claim on it
+  -- is disabled in plugins/lsp.lua, and minuet (plugins/autocomplete.lua) is
+  -- enabled = false. :Copilot auth also mints the token the codecompanion
+  -- `copilot` adapter above reads.
+  -- To switch ghost text to minuet: set enabled = true on the minuet spec and
+  -- set suggestion.enabled = false here (or drop the event/keymap lines).
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
+    event = "InsertEnter",
     opts = {
-      suggestion = { enabled = true },
+      suggestion = {
+        enabled = true,
+        auto_trigger = true,
+        keymap = { accept = "<Tab>", accept_word = false, accept_line = false },
+      },
       panel = { enabled = false },
       filetypes = {
         markdown = true,
