@@ -9,10 +9,13 @@ then
     micromamba activate base
 fi
 
-# if the file ~/.config/hrdag/api exists, it is a key-value file with the key API_KEY
-# create the env var KJ_API_KEY as the value associated with the key API_KEY
 if [ -f ~/.config/hrdag/api ]; then
     export KJ_API_KEY=$(grep -E '^API_KEY=' ~/.config/hrdag/api | cut -d= -f2-)
+fi
+
+if [ -f ~/.config/ben/s3/credentials ]; then
+    export AWS_SHARED_CREDENTIALS_FILE=~/.config/ben/s3/credentials
+    export AWS_PROFILE=garage
 fi
 
 #fasd_cache="$HOME/.fasd-init-bash"
