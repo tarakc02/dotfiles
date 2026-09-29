@@ -375,8 +375,8 @@ Output rules:
     event = "InsertEnter",
     opts = {
       suggestion = {
-        enabled = true,
-        auto_trigger = true,
+        enabled = false,
+        auto_trigger = false,
         keymap = { accept = "<Tab>", accept_word = false, accept_line = false },
       },
       panel = { enabled = false },
