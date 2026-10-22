@@ -6,13 +6,13 @@ return {
     build = ":TSUpdate",
     event = { "BufReadPost", "BufNewFile" },
     config = function()
-      require("nvim-treesitter").setup({
-        ensure_installed = {
-          "bash", "c", "lua", "python", "r", "julia",
-          "latex", "bibtex", "markdown", "markdown_inline",
-          "sql", "json", "yaml", "toml", "vim", "vimdoc",
-          "html", "css", "javascript",
-        },
+      -- The main branch ignores `ensure_installed`; parsers + queries
+      -- must be installed explicitly (no-op if already installed).
+      require("nvim-treesitter").install({
+        "bash", "c", "lua", "python", "r", "rnoweb", "julia",
+        "latex", "bibtex", "markdown", "markdown_inline",
+        "sql", "json", "yaml", "toml", "vim", "vimdoc",
+        "html", "css", "javascript",
       })
 
       -- Enable treesitter highlighting
