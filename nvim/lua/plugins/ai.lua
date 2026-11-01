@@ -166,7 +166,7 @@ return {
                         PI_ACP_PI_ARGS = "--mode rpc",
                       },
                       commands = {
-                          default = { "/home/tarak/git/pi-config/bin/pi-acp-server.sh" },
+                          default = { vim.fn.expand("~/git/pi-config/bin/pi-acp-server.sh") },
                       },
                       defaults = { mcpServers = {}, timeout = 60000 },
                       parameters = {
