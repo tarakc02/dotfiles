@@ -1,5 +1,9 @@
 #!/bin/bash
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # >>> mamba initialize >>>
 # !! Contents within this block are managed by 'mamba init' !!
 export MAMBA_EXE='/home/tarak/.local/bin/micromamba';
@@ -28,3 +32,20 @@ unset __mamba_setup
 #unset __conda_setup
 ## <<< conda initialize <<<
 
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in
+    *:/home/tarak/.juliaup/bin:*)
+        ;;
+
+    *)
+        export PATH=/home/tarak/.juliaup/bin${PATH:+:${PATH}}
+        ;;
+esac
+# Tab completion for juliaup and julia channel selection
+[ -f "/home/tarak/.julia/juliaup/completions/bash.sh" ] && source "/home/tarak/.julia/juliaup/completions/bash.sh"
+
+# <<< juliaup initialize <<<

@@ -8,11 +8,12 @@
 -- (load trigger) and virtualtext.auto_trigger_ft, which must match.
 local fim_filetypes = {
   "python", "r", "rmd", "lua", "rust", "sh", "julia", "sql",
-  "sh",
+  "sh", "make",
   "csv", "tsv", "txt", "rst", "tex", "latex", "org", "adoc", "asciidoc",
   "markdown", "mail",
   "yaml", "toml", "json", "jsonl", 
   "html", "css", "javascript", "typescript", "jsx", "tsx",
+  "codecompanion"
 }
 
 return {
